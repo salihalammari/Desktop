@@ -33,12 +33,16 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 
 char	**double_redir(t_struct *mini, char **file, int j)
 {
+	int old_stdin;
+
 	file = ft_split(&mini->commands[j][2], ' ');
 	if (!file)
 	 return (0);
+	 old_stdin = dup(STDIN_FILENO);
 	read_until (file[0]);
-	mini->in_fd = open(file[0], O_RDONLY | O_CREAT, 0777);
-	mini->name_file = ft_strdup(file[0]);
+	mini->in_fd = dup(0);
+	dup2(old_stdin, STDIN_FILENO);
+	close(old_stdin);
 	mini->is_append++;
 	return (file);
 }
@@ -46,21 +50,23 @@ char	**double_redir(t_struct *mini, char **file, int j)
 void	read_until(char *end)
 {
 	char	*line;
-	int		flags;
-	int		fd;
+	int		fd[2];
 
-	flags = O_WRONLY | O_CREAT | O_TRUNC;
 	line = ft_strdup("");
-	fd = open(end, flags, 0777);
+	pipe(fd);
 	while (ft_strncmp(line, end, ft_strlen(end))
 		|| ft_strlen(line) != ft_strlen(end))
 	{
 		free(line);
 		line = readline("> ");
+		if (!line)
+			break ;
 		if (ft_strlen(line) != ft_strlen(end))
-			ft_putendl_fd(line, fd);
+			ft_putendl_fd(line, fd[1]);
 	}
-	close(fd);
+	dup2(fd[0], 0);
+	close(fd[1]);
+	close(fd[0]);
 	free(line);
 }
 
