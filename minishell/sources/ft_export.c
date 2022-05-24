@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+int	check_concat(char *str)
+{
+	int i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '+')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 void	ft_export(t_struct *mini)
 {
 	int		i;
@@ -10,7 +23,10 @@ void	ft_export(t_struct *mini)
 	i = 1;
 	while (mini->tokens[i])
 	{
-		env_aux = ft_split(mini->tokens[i], '=');
+		if (check_concat(mini->tokens[i]) == 0)
+			env_aux = ft_split(mini->tokens[i], '=');
+		if (check_concat(mini->tokens[i]) == 1)
+			env_aux = ft_split(mini->tokens[i], '=');
 		if (!env_aux)
 		 return ;
 		if (!env_aux[1])

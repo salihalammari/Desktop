@@ -47,6 +47,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	rl_catch_signals = 0;
 	initialize(&mini, env);
 	while (1)
 	{

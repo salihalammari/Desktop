@@ -24,7 +24,7 @@ void	restore_prompt(int sig)
 {
 	g_ret_number = 130;
 	write(1, "\n", 1);
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	(void)sig;
@@ -36,7 +36,7 @@ void	ctrl_c(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 

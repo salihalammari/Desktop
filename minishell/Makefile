@@ -16,13 +16,13 @@ OBJS	=	$(SRCS:.c=.o)
 $(NAME): $(OBJS)
 	@echo "\033[0;32m\n\nCompiling minishell..."
 	@$(MAKE) -s bonus -C ./libft
-	@$(CC) $(CFLAGS) $(LIBFT) -L$(shell brew --prefix readline)/lib -lreadline $^ -o $(NAME)
+	@$(CC) $(CFLAGS) $(LIBFT) $(LDFLAGS) -lreadline $^ -o $(NAME)
 	@$(MAKE) -s clean -C ./libft
 	@printf "\n\033[0;32m ───────────── Done ──────────── \033[0m\n\n"
 
 %.o: %.c minishell.h
 	@printf "\033[0;33mGenerating minishell objects... %-10.10s\r" $@
-	@$(CC) $(CFLAGS) -c -I$(shell brew --prefix readline)/include $< -o $@
+	@$(CC) $(CFLAGS) -c $(CPPFLAGS) $< -o $@
 	@printf "\033[1;36m Compiling \033[0m $< \033[1;36m√\033[0m\n"
 
 all: $(NAME)
