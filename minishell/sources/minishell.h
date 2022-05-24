@@ -188,7 +188,7 @@ void	execve_error(t_struct *mini);
 void	exec_commands(t_struct *mini);
 void	exec_assist(t_struct *mini);
 void	action(t_struct *mini);
-void	exec_process(t_struct *mini, int in, int out);
+void	exec_process(t_struct *mini, int in, int out, int flag);
 void	ft_execve_pipe(t_struct *mini, int i, char *command);
 
 /*
