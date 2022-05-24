@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+static void	take_off_plus(char *str)
+{
+	int	i;
+
+	if (str[ft_strlen(str) - 1] == '+')
+	{
+		i = 0;
+		while (str[i + 1])
+			i++;
+		str[i] = '\0';
+	}
+} 
+
 void	ft_export(t_struct *mini)
 {
 	int		i;
@@ -58,6 +71,7 @@ void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
 		printf("minishell: quotes error\n");
 		return ;
 	}
+	take_off_plus(key);
     key = take_off_quotes(key);
     value = take_off_quotes(value);
 	if (find_env(mini, key))
