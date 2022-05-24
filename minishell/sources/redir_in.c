@@ -3,7 +3,7 @@
 void	redirect_in(t_struct *mini, int j, char *aux)
 {
 	char	**file;
-
+	
 	if (mini->commands[j][0] == '<')
 	{
 		file = NULL;
