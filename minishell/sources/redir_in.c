@@ -37,8 +37,8 @@ char	**double_redir(t_struct *mini, char **file, int j)
 
 	file = ft_split(&mini->commands[j][2], ' ');
 	if (!file)
-		return (0);
-	old_stdin = dup(STDIN_FILENO);
+	 return (0);
+	 old_stdin = dup(STDIN_FILENO);
 	read_until (file[0]);
 	mini->in_fd = dup(0);
 	dup2(old_stdin, STDIN_FILENO);
