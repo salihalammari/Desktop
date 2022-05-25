@@ -1,52 +1,46 @@
 #include "minishell.h"
 
-void	ft_exit(t_struct *mini)
+void	run_signals(int sig)
 {
-	free_char_array2(mini->commands);
-	free_char_array2(mini->env.content);
-	free_char_array2(mini->env.key);
-	free_char_array2(mini->tokens);
-	if (mini->path)
-		free_char_array(mini->path);
-	free (mini->home);
-	close(mini->in_fd);
-	close(mini->out_fd);
-	printf("exit\n");
-	exit(10);
-}
-
-void	free_line(char *line_read)
-{
-	if (line_read)
+	if (sig == 1)
 	{
-		free(line_read);
-		line_read = (char *) NULL;
+		signal(SIGINT, restore_prompt);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (sig == 2)
+	{
+		signal(SIGINT, ctrl_c);
+		signal(SIGQUIT, back_slash);
+	}
+	if (sig == 3)
+	{
+		printf("exit\n");
+		exit(10);
 	}
 }
 
-void	free_char_array(char **array)
+void	restore_prompt(int sig)
 {
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
+	g_ret_number = 130;
+	write(1, "\n", 1);
+	//rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void)sig;
 }
 
-void	free_char_array2(char **array)
+void	ctrl_c(int sig)
 {
-	int	i;
+	g_ret_number = 130;
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	//rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	i = 0;
-	while (array[i] != NULL)
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
+void	back_slash(int sig)
+{
+	g_ret_number = 131;
+	(void)sig;
 }
