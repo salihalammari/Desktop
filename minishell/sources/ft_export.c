@@ -11,7 +11,36 @@ static void	take_off_plus(char *str)
 			i++;
 		str[i] = '\0';
 	}
-} 
+}
+
+int	if_plus(char *key, char *value, t_struct *mini)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	while (key[i])
+	{
+		if (key[i] == '+')
+			flag = 1;
+		i++;
+	}
+	if (flag == 1)
+	{
+		i = 0;
+		take_off_plus(key);
+		while (mini->env.key[i])
+		{
+			if (ft_strncmp(mini->env.key[i], key, ft_strlen(mini->env.key[i])) == 0)
+			{
+				mini->env.content[i] = ft_strjoin(mini->env.content[i], value);
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
 
 void	ft_export(t_struct *mini)
 {
@@ -71,9 +100,10 @@ void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
 		printf("minishell: quotes error\n");
 		return ;
 	}
-	take_off_plus(key);
     key = take_off_quotes(key);
     value = take_off_quotes(value);
+	if (if_plus(key, value, mini))
+		return ;
 	if (find_env(mini, key))
 	{
 		free(mini->env.content[mini->env.index]);
