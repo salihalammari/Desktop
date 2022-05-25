@@ -14,7 +14,7 @@ void	run_signals(int sig)
 	}
 	if (sig == 3)
 	{
-		printf("exit\n");
+		write(1,"\033[1A\033[44Cexit\n",14);
 		exit(10);
 	}
 }
