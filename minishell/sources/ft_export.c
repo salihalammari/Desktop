@@ -15,16 +15,11 @@ static void	take_off_plus(char *str)
 
 int	if_plus(char *key, char *value, t_struct *mini)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	*aux;
 
-	i = 0;
-	while (key[i])
-	{
-		if (key[i] == '+')
-			flag = 1;
-		i++;
-	}
+	flag = plus_search(key);
 	if (flag == 1)
 	{
 		i = 0;
@@ -33,7 +28,10 @@ int	if_plus(char *key, char *value, t_struct *mini)
 		{
 			if (ft_strncmp(mini->env.key[i], key, ft_strlen(mini->env.key[i])) == 0)
 			{
-				mini->env.content[i] = ft_strjoin(mini->env.content[i], value);
+				aux = ft_strdup(mini->env.content[i]);
+				free(mini->env.content[i]);
+				mini->env.content[i] = ft_strjoin(aux, value);
+				free(aux);
 				return (1);
 			}
 			i++;
@@ -47,8 +45,7 @@ void	ft_export(t_struct *mini)
 	int		i;
 	char	**env_aux;
 
-	if (!mini->tokens[1])
-		print_export(mini);
+	print_export(mini);
 	i = 1;
 	while (mini->tokens[i])
 	{
@@ -70,17 +67,7 @@ void	ft_export(t_struct *mini)
 			i++;
 			continue ;
 		}
-		if (env_aux[1])
-			verify_if_env_exists(mini, env_aux, i);
-		else if (mini->tokens[i][ft_strlen(mini->tokens[1]) - 1] == '=')
-		{
-			env_aux[1] = ft_strdup("");
-			verify_if_env_exists(mini, env_aux, i);
-		}
-		free(env_aux[0]);
-		free(env_aux[1]);
-		free(env_aux);
-		env_aux = NULL;
+		exec_verify(mini, env_aux, i);
 		i++;
 	}
 	g_ret_number = 0;
@@ -102,21 +89,7 @@ void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
 	}
     key = take_off_quotes(key);
     value = take_off_quotes(value);
-	if (if_plus(key, value, mini))
-		return ;
-	if (find_env(mini, key))
-	{
-		free(mini->env.content[mini->env.index]);
-		mini->env.content[mini->env.index] = ft_strdup(value);
-	}
-	else
-		add_env(mini, key, value);
-	if (!ft_strncmp(mini->tokens[i], "PATH", 4))
-	{
-		if (mini->path)
-			free_char_array(mini->path);
-		init_path(mini);
-	}
+	exec_export_add(mini, key, value, i);
 }
 
 void	add_env(t_struct *mini, char *new_key, char *new_content)
