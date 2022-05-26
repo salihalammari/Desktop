@@ -51,7 +51,7 @@ void	ft_export(t_struct *mini)
 	{
 		env_aux = ft_split(mini->tokens[i], '=');
 		if (!env_aux)
-		 return ;
+			return ;
 		if (!env_aux[1])
 		{
 			if (!check_quote_s1(env_aux[0]))
