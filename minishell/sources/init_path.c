@@ -10,21 +10,19 @@ int	init_path(t_struct *mini)
 	if (!path_aux)
 		return (0);
 	path = ft_split(path_aux, ':');
-	if (!path)
-		return (0);
 	i = 0;
-	while(path[i])
+	while (path[i])
 		i++;
-	mini->path = (char **)malloc(sizeof(char *) * i);
-	if (!mini->path)
-		return (free(path), 0);
+	mini->path = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (path[i] != NULL)
+	while (path && path[i])
 	{
 		mini->path[i] = ft_strjoin(path[i], "/");
+		free(path[i]);
 		i++;
 	}
-	free_char_array(path);
+	mini->path[i] = NULL;
+	free(path);
 	free(path_aux);
 	return (1);
 }
