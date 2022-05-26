@@ -84,6 +84,14 @@ typedef struct s_struct
 	t_token	token;
 }			t_struct;
 
+typedef struct s_parm_lst
+{
+	char				**content;
+	char				**output_redirect;
+	char				**input_redirect;
+	struct s_parm_lst	*next;
+}	t_parm_lst;
+
 /*
 ** Minishell functions
 */
@@ -128,8 +136,20 @@ void	free_char_array(char **array);
 void	free_char_array2(char **array);
 
 /*
+** ft_export_utils.c
+*/
+int 	check_quote_s1(char *str);
+char    *take_off_quotes(char *list);
+int		ft_strind(char *str, int c);
+void    print_export(t_struct *mini);
+int 	check_quotes(char *str1, char *str2);
+void	exec_verify(t_struct *mini, char **evn_aux, int i);
+void	exec_export_add(t_struct *mini, char *key, char *value, int i);
+
+/*
 ** ft_export.c
 */
+int		if_plus(char *key, char *value, t_struct *mini);
 void	ft_export(t_struct *mini);
 void	verify_if_env_exists(t_struct *mini, char **env_aux, int i);
 void	add_env(t_struct *mini, char *new_key, char *new_content);
@@ -208,6 +228,11 @@ char	*clean_spaces(char *in);
 int		count_pipe(t_struct *mini, char *in, int i);
 
 /*
+**take_off_quotes.c
+*/
+char    *take_off_quotes(char *list);
+
+/*
 ** token.c
 */
 void	tokenizer(t_struct *mini);
@@ -222,11 +247,5 @@ void	get_dollar_sign(t_struct *mini, t_token *tk);
 t_token	*init_tk(void);
 void	free_tk(t_token *tk);
 void	finish_tokenizer(t_struct *mini, t_token *tk);
-
-int check_quote_s1(char *str);
-char    *take_off_quotes(char *list);
-int	ft_strind(char *str, int c);
-void    print_export(t_struct *mini);
-int check_quotes(char *str1, char *str2);
 
 #endif
