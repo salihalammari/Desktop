@@ -33,6 +33,30 @@ int	init_echo(t_struct *mini, int n)
 
 void	print_echo(t_struct *mini, char *mini_tokens_i)
 {
+	int	i;
+	int	flag;
+	char	*str;
+
+	i = 0;
+	while (mini->line_read[i])
+	{
+		if (mini->line_read[i] == '>')
+			flag = 1;
+		i++;
+	}
+	if (flag == 1)
+	{
+		i = 2;
+		str = "";
+		while (ft_split(mini->commands[1], ' ')[i])
+		{
+			str = ft_strjoin(str, " ");
+			str = ft_strjoin(str, ft_split(mini->commands[1], ' ')[i]);
+			i++;
+		}
+		mini_tokens_i = ft_strjoin(mini_tokens_i, str);
+		free(str);
+	}
 	if (!ft_strncmp(mini_tokens_i, "$?", 2))
 		ft_putnbr_fd(g_ret_number, mini->out_fd);
 	else
