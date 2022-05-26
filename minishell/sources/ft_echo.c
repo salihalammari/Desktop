@@ -36,6 +36,7 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	int	i;
 	int	flag;
 	char	*str;
+	char	*aux;
 
 	i = 0;
 	while (mini->line_read[i])
@@ -47,11 +48,17 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	if (flag == 1)
 	{
 		i = 2;
-		str = "";
+		str = ft_strdup("");
 		while (ft_split(mini->commands[1], ' ')[i])
 		{
-			str = ft_strjoin(str, " ");
-			str = ft_strjoin(str, ft_split(mini->commands[1], ' ')[i]);
+			aux = ft_strdup(str);
+			free(str);
+			str = ft_strjoin(aux, " ");
+			free(aux);
+			aux = ft_strdup(str);
+			free(str);
+			str = ft_strjoin(aux, ft_split(mini->commands[1], ' ')[i]);
+			free(aux);
 			i++;
 		}
 		mini_tokens_i = ft_strjoin(mini_tokens_i, str);
