@@ -31,12 +31,38 @@ int	init_echo(t_struct *mini, int n)
 	return (n);
 }
 
+static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
+{
+	char	*aux;
+	char	*str;
+	int		i;
+
+	i = 2;
+	str = ft_strdup("");
+	while (ft_split(mini->commands[1], ' ')[i])
+	{
+		aux = ft_strdup(str);
+		free(str);
+		str = ft_strjoin(aux, " ");
+		free(aux);
+		aux = ft_strdup(str);
+		free(str);
+		str = ft_strjoin(aux, ft_split(mini->commands[1], ' ')[i]);
+		free(aux);
+		i++;
+	}
+	aux = ft_strdup(mini_tokens_i);
+	free(mini_tokens_i);
+	mini_tokens_i = ft_strjoin(aux, str);
+	free(str);
+	free(aux);
+	return (mini_tokens_i);
+}
+
 void	print_echo(t_struct *mini, char *mini_tokens_i)
 {
 	int	i;
 	int	flag;
-	char	*str;
-	char	*aux;
 
 	i = 0;
 	while (mini->line_read[i])
@@ -47,22 +73,7 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	}
 	if (flag == 1)
 	{
-		i = 2;
-		str = ft_strdup("");
-		while (ft_split(mini->commands[1], ' ')[i])
-		{
-			aux = ft_strdup(str);
-			free(str);
-			str = ft_strjoin(aux, " ");
-			free(aux);
-			aux = ft_strdup(str);
-			free(str);
-			str = ft_strjoin(aux, ft_split(mini->commands[1], ' ')[i]);
-			free(aux);
-			i++;
-		}
-		mini_tokens_i = ft_strjoin(mini_tokens_i, str);
-		free(str);
+		mini_tokens_i = echo_with_redir(mini, mini_tokens_i);
 	}
 	if (!ft_strncmp(mini_tokens_i, "$?", 2))
 		ft_putnbr_fd(g_ret_number, mini->out_fd);
