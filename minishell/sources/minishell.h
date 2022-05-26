@@ -138,6 +138,7 @@ void	free_char_array2(char **array);
 /*
 ** ft_export_utils.c
 */
+int		plus_search(char *key);
 int 	check_quote_s1(char *str);
 char    *take_off_quotes(char *list);
 int		ft_strind(char *str, int c);
