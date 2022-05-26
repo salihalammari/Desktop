@@ -3,12 +3,20 @@
 void	get_home_sign(t_struct *mini, t_token *tk)
 {
 	char	*extend;
+	char	*end;
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
-	tk->end = ft_strjoin(tk->end, tk->new);
+	end = ft_strdup(tk->end);
+	free(tk->end);
+	tk->end = ft_strjoin(end, tk->new);
 	free(tk->new);
+	free(end);
 	extend = mini->home;
-	tk->end = ft_strjoin(tk->end, extend);
+	end = ft_strdup(tk->end);
+	free(tk->end);
+	tk->end = ft_strjoin(end, extend);
+	free(end);
+	free(extend);
 	tk->i++;
 	tk->len = 1;
 	tk->init = tk->i;
@@ -18,10 +26,14 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 {
 	char	*extend;
 	char	*n_env;
+	char	*end;
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
-	tk->end = ft_strjoin(tk->end, tk->new);
+	end = ft_strdup(tk->end);
+	free(tk->end);
+	tk->end = ft_strjoin(end, tk->new);
 	free (tk->new);
+	free(end);
 	tk->posic = tokenizer_find_char(&mini->line[tk->i + 1], ' ');
 	n_env = ft_substr(mini->line, tk->i + 1, tk->posic);
 	if (mini->line[tk->i + 1] != '?' && find_env(mini, n_env))
@@ -31,7 +43,12 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	else
 		extend = NULL;
 	if (extend)
-		tk->end = ft_strjoin(tk->end, extend);
+	{
+		end = ft_strdup(tk->end);
+		free(tk->end);
+		tk->end = ft_strjoin(end, extend);
+		free(end);
+	}
 	free(extend);
 	tk->i += ft_strlen(n_env) + 1;
 	free (n_env);
