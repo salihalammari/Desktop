@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 void	redirect_in(t_struct *mini, int j, char *aux)

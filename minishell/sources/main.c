@@ -28,16 +28,19 @@ char	*create_prompt(void)
 	char	*prompt;
 	char	*cyan;
 	char	*white;
+	char	*tab1;
 
 	buf = get_cwd_buf();
 	cyan = ft_strdup(CYAN);
 	white = ft_strdup(WHITE);
 	prompt = ft_strjoin(cyan, buf);
 	free(buf);
-	prompt = ft_strjoin(prompt, white);
+	tab1 = ft_strjoin(prompt, white);
+	free(prompt);
 	free(white);
 	free(cyan);
-	prompt = ft_strjoin(prompt, "minishell$ ");
+	prompt = ft_strjoin(tab1, "minishell$ ");
+	free(tab1);
 	return (prompt);
 }
 

@@ -64,7 +64,7 @@ int	count_pipe(t_struct *mini, char *in, int i)
 	{
 		if (in[i] == '|' && mini->split.q == 0)
 			mini->split.qtt_pipe++;
-		if (mini->split.q == 0 && i > 1 && mini->split.len > 0)
+		if (mini->split.q == 0  && i > 1 && mini->split.len > 0)
 		{
 			mini->commands[mini->split.n_comand] = ft_substr(in,
 					mini->split.ini, mini->split.len);
@@ -80,6 +80,13 @@ int	count_pipe(t_struct *mini, char *in, int i)
 				i++;
 				mini->split.len = 1;
 			}
+		}
+		if (mini->split.q == 0 && i == 0 && in[0] == '<')
+		{
+			mini->commands[mini->split.n_comand] = ft_split(in, ' ')[2];
+			mini->split.ini = i;
+			mini->split.len = 0;
+			mini->split.n_comand++;
 		}
 	}
 	return (i);

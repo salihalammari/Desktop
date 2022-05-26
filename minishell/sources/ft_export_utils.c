@@ -21,7 +21,7 @@ void    print_export(t_struct *mini)
     i = 0;
     while (i < mini->env.len)
     {
-		if (ft_isalnum(mini->env.content[i][0]))
+		if (ft_strlen(mini->env.content[i]) > 2)
         	printf("declare -x %s=\"%s\"\n", mini->env.key[i], mini->env.content[i]);
 		else
 			printf("declare -x %s=%s\n", mini->env.key[i], mini->env.content[i]);

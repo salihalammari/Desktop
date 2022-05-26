@@ -63,7 +63,7 @@ void	tokenizer(t_struct *mini)
 
 	tk = init_tk();
 	mini->token.quote = 0;
-	tk->end = ft_strdup("");
+	// tk->end = ft_strdup("");
 	if (mini->line)
 	{
 		while ((int)ft_strlen(mini->line) > tk->i)

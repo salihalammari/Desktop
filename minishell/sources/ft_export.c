@@ -1,5 +1,21 @@
 #include "minishell.h"
 
+int	is_key_valid(char *key)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (0);
+	while (key[i] && key[i] != '=')
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static void	take_off_plus(char *str)
 {
 	int	i;

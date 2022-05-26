@@ -130,6 +130,7 @@ void	free_char_array2(char **array);
 /*
 ** ft_export.c
 */
+int	is_key_valid(char *key);
 void	ft_export(t_struct *mini);
 void	verify_if_env_exists(t_struct *mini, char **env_aux, int i);
 void	add_env(t_struct *mini, char *new_key, char *new_content);
