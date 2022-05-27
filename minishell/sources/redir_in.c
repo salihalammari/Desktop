@@ -3,7 +3,7 @@
 void	redirect_in(t_struct *mini, int j, char *aux)
 {
 	char	**file;
-	
+
 	if (mini->commands[j][0] == '<')
 	{
 		file = NULL;
@@ -13,7 +13,7 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 		{
 			file = ft_split(&mini->commands[j][1], ' ');
 			if (!file)
-				return ;
+				return (free(file));
 			mini->in_fd = open(file[0], O_RDONLY, 0777);
 			if (mini->in_fd == -1 && mini->error_name_file == NULL)
 				mini->error_name_file = ft_strdup(file[0]);
@@ -37,8 +37,8 @@ char	**double_redir(t_struct *mini, char **file, int j)
 
 	file = ft_split(&mini->commands[j][2], ' ');
 	if (!file)
-	 return (0);
-	 old_stdin = dup(STDIN_FILENO);
+		return (0);
+	old_stdin = dup(STDIN_FILENO);
 	read_until (file[0]);
 	mini->in_fd = dup(0);
 	dup2(old_stdin, STDIN_FILENO);
@@ -54,15 +54,15 @@ void	read_until(char *end)
 
 	line = ft_strdup("");
 	pipe(fd);
-	while (ft_strncmp(line, end, ft_strlen(end))
-		|| ft_strlen(line) != ft_strlen(end))
+	while (1)
 	{
 		free(line);
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) != ft_strlen(end))
-			ft_putendl_fd(line, fd[1]);
+		if (ft_strncmp(line, end, ft_strlen(end)) == 0 && line[ft_strlen(end)] == '\0')
+			break ;
+		ft_putendl_fd(line, fd[1]);
 	}
 	dup2(fd[0], 0);
 	close(fd[1]);
@@ -73,13 +73,22 @@ void	read_until(char *end)
 char	*new_comman(int i, char **str)
 {
 	char	*aux;
+	char	*copy;
 
 	aux = ft_strdup("");
 	while (str[i] != NULL)
 	{
 		if (ft_strlen(aux) > 0)
-			aux = ft_strjoin(aux, " ");
-		aux = ft_strjoin(aux, str[i]);
+		{
+			copy = ft_strdup(aux);
+			free(aux);
+			aux = ft_strjoin(copy, " ");
+			free(copy);
+		}
+		copy = ft_strdup(aux);
+		free(aux);
+		aux = ft_strjoin(copy, str[i]);
+		free(copy);
 		i++;
 	}
 	return (aux);
