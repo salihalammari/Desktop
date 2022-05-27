@@ -9,7 +9,8 @@ SRCS	=	sources/builtins.c sources/check_quotes.c sources/find_env.c \
 	sources/ft_pwd.c sources/ft_unset.c sources/init_path.c \
 	sources/main.c sources/redir_in.c sources/redir_out.c \
 	sources/run_pipe_aux.c sources/run_pipe.c sources/signal.c \
-	sources/split_cmd.c sources/token_utils.c sources/token.c
+	sources/split_cmd.c sources/token_utils.c sources/token.c \
+	sources/take_off_quotes.c
 
 OBJS	=	$(SRCS:.c=.o)
 
