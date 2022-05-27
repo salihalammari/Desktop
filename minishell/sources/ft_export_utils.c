@@ -66,7 +66,11 @@ void	exec_verify(t_struct *mini, char **env_aux, int i)
 void	exec_export_add(t_struct *mini, char *key, char *value, int i)
 {
 	if (if_plus(key, value, mini))
+	{
+		free(key);
+		free(value);
 		return ;
+	}
 	if (find_env(mini, key))
 	{
 		free(mini->env.content[mini->env.index]);
