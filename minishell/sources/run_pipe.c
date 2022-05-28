@@ -31,6 +31,11 @@ void	exec_assist(t_struct *mini, int flag)
 	int	i;
 
 	action(mini);
+	if (mini->out_fd == -1)
+	{
+		mini->out_fd = dup(1);
+		return ;
+	}
 	if (mini->commands[0][0] != '>')
 	{
 		tokenizer(mini);
