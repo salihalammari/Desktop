@@ -33,6 +33,7 @@ void	exec_assist(t_struct *mini, int flag)
 	action(mini);
 	if (mini->out_fd == -1)
 	{
+		printf("minishell: Permission denied\n");
 		mini->out_fd = dup(1);
 		return ;
 	}
