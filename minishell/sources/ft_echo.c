@@ -41,6 +41,8 @@ static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 	i = 2;
 	str = ft_strdup("");
 	split = ft_split(mini->commands[1], ' ');
+	if (split[0][1] != '\0')
+		i = 1;
 	while (split[i])
 	{
 		aux = ft_strdup(str);
