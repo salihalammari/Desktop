@@ -56,7 +56,7 @@ void	ft_export(t_struct *mini)
 		{
 			if (!check_quote_s1(env_aux[0]))
         		return ;
-			env_aux[0] = take_off_quotes(env_aux[0]);
+			take_off_quotes(env_aux[0]);
 			if (find_env(mini, env_aux[0]))
 			{
 				i++;
@@ -87,8 +87,8 @@ void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
 		printf("minishell: quotes error\n");
 		return ;
 	}
-    key = take_off_quotes(key);
-    value = take_off_quotes(value);
+    take_off_quotes(key);
+    take_off_quotes(value);
 	exec_export_add(mini, key, value, i);
 }
 
