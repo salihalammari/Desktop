@@ -74,7 +74,7 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	flag = 0;
 	while (mini->line_read[i])
 	{
-		if (mini->line_read[i] == '>')
+		if (mini->line_read[i] == '>' && find_char(mini_tokens_i, '>') == (int)ft_strlen(mini_tokens_i))
 			flag = 1;
 		i++;
 	}
