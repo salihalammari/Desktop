@@ -39,7 +39,7 @@ char	*create_prompt(void)
 	free(prompt);
 	free(white);
 	free(cyan);
-	prompt = ft_strjoin(tab1, "minishell$ ");
+	prompt = ft_strjoin(tab1, " $ ");
 	free(tab1);
 	return (prompt);
 }
@@ -50,7 +50,6 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	rl_catch_signals = 0;
 	initialize(&mini, env);
 	while (1)
 	{

@@ -25,7 +25,7 @@ void	split_cmd(t_struct *mini, char *in, int i)
 		j = 0;
 		while (mini->commands[j])
 		{
-			mini->commands[j] = take_off_quotes(mini->commands[j]);
+			take_off_quotes(mini->commands[j]);
 			j++;
 		}
 	}
@@ -60,6 +60,8 @@ char	*clean_spaces(char *in)
 
 int	count_pipe(t_struct *mini, char *in, int i)
 {
+	char	**copy;
+
 	if (in[i] == '|' || in[i] == '<' || in[i] == '>')
 	{
 		if (in[i] == '|' && mini->split.q == 0)
@@ -83,7 +85,9 @@ int	count_pipe(t_struct *mini, char *in, int i)
 		}
 		if (mini->split.q == 0 && i == 0 && in[0] == '<')
 		{
-			mini->commands[mini->split.n_comand] = ft_split(in, ' ')[2];
+			copy = ft_split(in, ' ');
+			mini->commands[mini->split.n_comand] = ft_strdup(copy[2]);
+			free_char_array(copy);
 			mini->split.ini = i;
 			mini->split.len = 0;
 			mini->split.n_comand++;

@@ -14,10 +14,9 @@ void	run_signals(int sig)
 	}
 	if (sig == 3)
 	{
-	write(1,"\033[1A\033[44Cexit\n",14);
+		write(1,"\033[1A\033[44Cexit\n",14);
 		exit(10);
 	}
-	// write(1, "\n", 1);
 }
 
 void	restore_prompt(int sig)
