@@ -83,7 +83,7 @@ int	count_pipe(t_struct *mini, char *in, int i)
 				mini->split.len = 1;
 			}
 		}
-		if (mini->split.q == 0 && i == 0 && in[0] == '<')
+		if (mini->split.q == 0 && i == 0 && (in[0] == '<' || in[0] == '>'))
 		{
 			copy = ft_split(in, ' ');
 			mini->commands[mini->split.n_comand] = ft_strdup(copy[2]);
