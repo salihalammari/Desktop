@@ -11,7 +11,7 @@ void	get_home_sign(t_struct *mini, t_token *tk)
 	tk->end = ft_strjoin(end, tk->new);
 	free(tk->new);
 	free(end);
-	extend = mini->home;
+	extend = ft_strdup(mini->home);
 	end = ft_strdup(tk->end);
 	free(tk->end);
 	tk->end = ft_strjoin(end, extend);
