@@ -36,6 +36,7 @@ int	ft_cd(t_struct *mini)
 {
 	char	*token_aux;
 	char	*path;
+	int		i;
 	bool	home;
 
 	home = there_is_home(mini);
@@ -55,8 +56,16 @@ int	ft_cd(t_struct *mini)
 			path = ft_strdup(mini->home);
 			token_aux = ft_strdup(path);
 			free(path);
+			i = 0;
+			while (mini->env.key[i])
+			{
+
+				if (ft_strncmp(mini->env.key[i], "OLDPWD", 6) == 0)
+					break ;
+				i++;
+			}
 			g_ret_number = chdir(token_aux);
-			printf("%s\n", token_aux);
+			printf("%s\n", mini->env.content[i]);
 			free(token_aux);
 			return (0);
 		}
