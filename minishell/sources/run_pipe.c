@@ -38,7 +38,7 @@ void	exec_assist(t_struct *mini, int flag)
 		{
 			i = -1;
 			while (mini->tokens[i++])
-				mini->tokens[i] = take_off_quotes(mini->tokens[i]);
+				take_off_quotes(mini->tokens[i]);
 		}
 		if (mini->tokens[0])
 			is_builtin(mini->tokens[0], mini);
@@ -49,7 +49,7 @@ void	exec_assist(t_struct *mini, int flag)
 		free(mini->token.to_exec);
 	}
 	if (mini->name_file)
-		unlink(mini->name_file);
+		free(mini->name_file);
 }
 
 void	action(t_struct *mini)
