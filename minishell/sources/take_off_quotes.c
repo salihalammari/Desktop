@@ -82,12 +82,12 @@ static void    third_case(char *list)
     }
 }
 
-char    *take_off_quotes(char *list)
+void    take_off_quotes(char *list)
 {
     int i;
 
     if (!list)
-        return (0);
+        return ;
     first_case(list);
     second_case(list);
     third_case(list);
@@ -101,5 +101,5 @@ char    *take_off_quotes(char *list)
         }
         i++;
     }
-    return (list);
+    //return (list);
 }
