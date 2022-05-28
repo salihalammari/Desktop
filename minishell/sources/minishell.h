@@ -140,7 +140,6 @@ void	free_char_array2(char **array);
 */
 int		plus_search(char *key);
 int 	check_quote_s1(char *str);
-char    *take_off_quotes(char *list);
 int		ft_strind(char *str, int c);
 void    print_export(t_struct *mini);
 int 	check_quotes(char *str1, char *str2);
@@ -231,7 +230,7 @@ int		count_pipe(t_struct *mini, char *in, int i);
 /*
 **take_off_quotes.c
 */
-char    *take_off_quotes(char *list);
+void	take_off_quotes(char *list);
 
 /*
 ** token.c
