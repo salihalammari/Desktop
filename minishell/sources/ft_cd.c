@@ -35,9 +35,32 @@ static void	change_oldpwd(t_struct *mini)
 int	ft_cd(t_struct *mini)
 {
 	char	*token_aux;
+	char	*path;
 	bool	home;
 
 	home = there_is_home(mini);
+	if (mini->tokens[1])
+	{
+		if (ft_strncmp(mini->tokens[1], "--", 2) == 0 && mini->tokens[1][2] == '\0')
+		{
+			path = ft_strdup(mini->home);
+			token_aux = ft_strdup(path);
+			free(path);
+			g_ret_number = chdir(token_aux);
+			free(token_aux);
+			return (0);
+		}
+		else if (ft_strncmp(mini->tokens[1], "-", 1) == 0 && mini->tokens[1][1] == '\0')
+		{
+			path = ft_strdup(mini->home);
+			token_aux = ft_strdup(path);
+			free(path);
+			g_ret_number = chdir(token_aux);
+			printf("%s\n", token_aux);
+			free(token_aux);
+			return (0);
+		}
+	}
 	if (mini->tokens[1])
 		token_aux = ft_strdup(mini->token.to_print);
 	else
