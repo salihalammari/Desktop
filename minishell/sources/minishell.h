@@ -83,14 +83,6 @@ typedef struct s_struct
 	t_token	token;
 }			t_struct;
 
-typedef struct s_parm_lst
-{
-	char				**content;
-	char				**output_redirect;
-	char				**input_redirect;
-	struct s_parm_lst	*next;
-}	t_parm_lst;
-
 /*
 ** Minishell functions
 */
