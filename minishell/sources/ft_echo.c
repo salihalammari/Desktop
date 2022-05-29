@@ -33,35 +33,6 @@ int	init_echo(t_struct *mini, int n)
 
 static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 {
-	int		i;
-	char	*aux;
-	char	*copy;
-
-	i = 0;
-	while (mini->line_read[i])
-	{
-		if (mini->line_read[i] == '>')
-		{
-			if (mini->line_read[++i] == ' ')
-			{
-				while (mini->line_read[++i] != ' ')
-				++i;
-				aux = ft_strdup(&mini->line_read[i]);
-				copy = ft_strdup(mini_tokens_i);
-				free(mini_tokens_i);
-				mini_tokens_i = ft_strjoin(copy, aux);
-				free(aux);
-				free(copy);
-				return (mini_tokens_i);
-			}
-		}
-		i++;
-	}
-	return (mini_tokens_i);
-}
-
-/* static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
-{
 	char	*aux;
 	char	*str;
 	int		i;
@@ -86,12 +57,12 @@ static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 	}
 	free_char_array(split);
 	aux = ft_strdup(mini_tokens_i);
-	//free(mini_tokens_i);
+	free(mini_tokens_i);
 	mini_tokens_i = ft_strjoin(aux, str);
 	free(aux);
-	//free(str);
+	free(str);
 	return (mini_tokens_i);
-} */
+}
 
 void	print_echo(t_struct *mini, char *mini_tokens_i)
 {
