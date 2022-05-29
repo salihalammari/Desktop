@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:06:56 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:06:58 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	tokenizer_find_char(char *string, char needle)
@@ -55,6 +67,7 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	aux[c] = '\0';
 	free(mini->token.to_print);
 	mini->token.to_print = aux;
+	free(aux);
 }
 
 void	tokenizer(t_struct *mini)
