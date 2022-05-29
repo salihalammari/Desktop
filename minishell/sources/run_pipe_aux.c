@@ -18,6 +18,7 @@ int	file_descriptor_handler(int in, int out)
 void	spaces_in_pipe(t_struct *mini, int i, char *command)
 {
 	char	*aux;
+	char	*copy;
 
 	if (ft_strlen(mini->token.to_print) && mini->tokens[i]
 		&& (mini->tokens[i][0] == QUOTE || mini->tokens[i][0] == D_QUOTE)
@@ -30,7 +31,9 @@ void	spaces_in_pipe(t_struct *mini, int i, char *command)
 		aux = ft_strtrim(mini->tokens[i], D_QUOTE_S);
 	free(mini->tokens[i]);
 	mini->tokens[i] = aux;
-	command = ft_strjoin(command, mini->tokens[i - 1]);
+	copy = ft_strdup(command);
+	free(command);
+	command = ft_strjoin(copy, mini->tokens[i - 1]);
 	g_ret_number = execve(command, &mini->tokens[i - 1], mini->env.env);
 	free(command);
 }
