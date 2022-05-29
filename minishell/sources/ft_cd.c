@@ -9,6 +9,7 @@ static void	change_pwd(t_struct *mini)
 	{
 		if (ft_strncmp(mini->env.key[i], "PWD", 3) == 0)
 		{
+			free(mini->env.content[i]);
 			mini->env.content[i] = get_cwd_buf();
 			return ;
 		}
@@ -25,6 +26,7 @@ static void	change_oldpwd(t_struct *mini)
 	{
 		if (ft_strncmp(mini->env.key[i], "OLDPWD", 6) == 0)
 		{
+			free(mini->env.content[i]);
 			mini->env.content[i] = get_cwd_buf();
 			return ;
 		}
