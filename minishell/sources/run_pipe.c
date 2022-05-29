@@ -35,6 +35,7 @@ void	exec_assist(t_struct *mini, int flag)
 	{
 		printf("minishell: Permission denied\n");
 		mini->out_fd = dup(1);
+		free(mini->name_file);
 		return ;
 	}
 	if (mini->commands[0][0] != '>')
@@ -51,7 +52,6 @@ void	exec_assist(t_struct *mini, int flag)
 		if (mini->in_fd != -1)
 			exec_process(mini, mini->in_fd, mini->out_fd, flag);
 		free_char_array(mini->tokens);
-		free(mini->token.to_print);
 		free(mini->token.to_exec);
 	}
 	if (mini->name_file)
