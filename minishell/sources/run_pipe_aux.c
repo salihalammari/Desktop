@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_pipe_aux.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:05:26 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:05:28 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	file_descriptor_handler(int in, int out)
@@ -34,6 +46,7 @@ void	spaces_in_pipe(t_struct *mini, int i, char *command)
 	copy = ft_strdup(command);
 	free(command);
 	command = ft_strjoin(copy, mini->tokens[i - 1]);
+	free(copy);
 	g_ret_number = execve(command, &mini->tokens[i - 1], mini->env.env);
 	free(command);
 }
