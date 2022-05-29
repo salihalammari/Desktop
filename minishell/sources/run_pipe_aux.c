@@ -38,11 +38,31 @@ void	spaces_in_pipe(t_struct *mini, int i, char *command)
 	free(command);
 }
 
-void	execve_error(t_struct *mini)
+void	execve_error(t_struct *mini, int out)
 {
+	char	*copy;
+	char	*mes;
+
 	g_ret_number = 127;
 	if (mini->tokens[0][0] != '|')
-		printf("minishell: %s: %s", mini->tokens[0], ERROR_CMD);
+	{
+		mes = ft_strjoin("minishell: ", mini->tokens[0]);
+		copy = ft_strdup(mes);
+		free(mes);
+		mes = ft_strjoin(copy, ": command not found");
+		free(copy);
+		ft_putendl_fd(mes, out);
+		free(mes);
+	}
 	else if (mini->tokens[1])
-		printf("minishell: %s: %s", mini->tokens[1], ERROR_CMD);
+	{
+		mes = ft_strjoin("minishell: ", mini->tokens[1]);
+		copy = ft_strdup(mes);
+		free(mes);
+		mes = ft_strjoin(copy, ": command not found");
+		free(copy);
+		ft_putendl_fd(mes, out);
+		free(mes);
+	}
+	close(out);
 }
