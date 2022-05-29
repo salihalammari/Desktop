@@ -47,12 +47,16 @@ char	*create_prompt(void)
 int	main(int ac, char **av, char **env)
 {
 	t_struct	mini;
+	int	rl_catch_signals;
+	int	out;
 
 	(void)ac;
 	(void)av;
+	rl_catch_signals = 0;
 	initialize(&mini, env);
 	while (1)
 	{
+		out = dup(1);
 		mini.out_fd = STDOUT_FILENO;
 		mini.in_fd = STDIN_FILENO;
 		get_line(&mini);
@@ -62,7 +66,7 @@ int	main(int ac, char **av, char **env)
 			{
 				split_cmd(&mini, mini.line_read, 0);
 				if (mini.split.n_comand > 0 && mini.commands[0][0] != '|')
-					exec_commands(&mini);
+					exec_commands(&mini, out);
 				if (mini.commands[0] && mini.commands[0][0] == '|')
 					printf(ERROR_PIPE);
 				free_char_array2(mini.commands);
