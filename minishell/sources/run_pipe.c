@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	exec_commands(t_struct *mini)
+void	exec_commands(t_struct *mini, int out)
 {
 	int		j;
 	int		fd[2];
@@ -16,17 +16,17 @@ void	exec_commands(t_struct *mini)
 			g_ret_number = 127;
 		}
 		mini->out_fd = fd[1];
-		exec_assist(mini, 0);
+		exec_assist(mini, 0, out);
 		close(mini->out_fd);
 		if (mini->in_fd != 0)
 			close(mini->in_fd);
 		mini->in_fd = fd[0];
 		j++;
 	}
-	exec_assist(mini, 1);
+	exec_assist(mini, 1, out);
 }
 
-void	exec_assist(t_struct *mini, int flag)
+void	exec_assist(t_struct *mini, int flag, int out)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ void	exec_assist(t_struct *mini, int flag)
 		if (mini->tokens[0])
 			is_builtin(mini->tokens[0], mini);
 		if (mini->in_fd != -1)
-			exec_process(mini, mini->in_fd, mini->out_fd, flag);
+			exec_process(mini, mini->in_fd, mini->out_fd, flag, out);
 		free_char_array(mini->tokens);
 		free(mini->token.to_exec);
 	}
@@ -78,7 +78,7 @@ void	action(t_struct *mini)
 	}
 }
 
-void	exec_process(t_struct *mini, int in, int out, int flag)
+void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
 {
 	pid_t	pid;
 
@@ -97,7 +97,7 @@ void	exec_process(t_struct *mini, int in, int out, int flag)
 		{
 			file_descriptor_handler(in, out);
 			g_ret_number = 127;
-			ft_execve_pipe(mini, 0, "");
+			ft_execve_pipe(mini, 0, "", sor);
 			exit(g_ret_number);
 		}
 		else if (pid != 0 && flag == 1)
@@ -107,14 +107,14 @@ void	exec_process(t_struct *mini, int in, int out, int flag)
 	}
 }
 
-void	ft_execve_pipe(t_struct *mini, int i, char *command)
+void	ft_execve_pipe(t_struct *mini, int i, char *command, int out)
 {
 	if (mini->tokens[0])
 	{
 		g_ret_number = execve(mini->tokens[0], &mini->tokens[0],
 				mini->env.env);
 		while (mini->path && mini->path[i] != NULL)
-		{
+		{	
 			command = ft_strdup(mini->path[i]);
 			if (mini->tokens[0][0] == '|' && mini->tokens[1])
 			{
@@ -130,6 +130,6 @@ void	ft_execve_pipe(t_struct *mini, int i, char *command)
 				spaces_in_pipe(mini, 1, command);
 			i++;
 		}
-		execve_error(mini);
+		execve_error(mini, out);
 	}
 }
