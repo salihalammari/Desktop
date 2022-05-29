@@ -22,7 +22,6 @@
 # define ERROR_PIPE "minishell: syntax error near unexpected token `|'\n"
 # define ERROR_DIR "No such file or directory\n"
 # define ERROR_HOME "minishell: cd: HOME not set\n"
-# define ERROR_CMD "command not found\n"
 
 int	g_ret_number;
 
@@ -200,16 +199,16 @@ int		find_char(char *string, char needle);
 */
 int		file_descriptor_handler(int in, int out);
 void	spaces_in_pipe(t_struct *mini, int i, char *command);
-void	execve_error(t_struct *mini);
+void	execve_error(t_struct *mini, int out);
 
 /*
 ** run_pipe.c
 */
-void	exec_commands(t_struct *mini);
-void	exec_assist(t_struct *mini, int flag);
+void	exec_commands(t_struct *mini, int out);
+void	exec_assist(t_struct *mini, int flag, int out);
 void	action(t_struct *mini);
-void	exec_process(t_struct *mini, int in, int out, int flag);
-void	ft_execve_pipe(t_struct *mini, int i, char *command);
+void	exec_process(t_struct *mini, int in, int out, int flag, int sor);
+void	ft_execve_pipe(t_struct *mini, int i, char *command, int out);
 
 /*
 ** signal.c
