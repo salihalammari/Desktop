@@ -52,10 +52,11 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	mini->token.quote = 0;
 	aux = ft_strtrim(in, " ");
 	mini->has_flag = false;
-	if (in[0] == '-' && in[1] == 'n')
+	i = 0;
+	while (in[i] == '-' && in[i + 1] == 'n' && in[i + 2] == ' ')
 	{
 		mini->has_flag = true;
-		i += 2;
+		i += 3;
 	}
 	while (in[i] == ' ')
 		i++;
