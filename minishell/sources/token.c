@@ -67,7 +67,7 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	aux[c] = '\0';
 	free(mini->token.to_print);
 	mini->token.to_print = aux;
-	free(aux);
+	//free(aux);
 }
 
 void	tokenizer(t_struct *mini)
