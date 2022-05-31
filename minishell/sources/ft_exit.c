@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:02:45 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:02:47 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_exit(t_struct *mini)
@@ -5,11 +17,15 @@ void	ft_exit(t_struct *mini)
 	free_char_array2(mini->commands);
 	free_char_array2(mini->env.content);
 	free_char_array2(mini->env.key);
+	free_char_array2(mini->tokens);
 	if (mini->path)
 		free_char_array(mini->path);
-	free (mini->home);
+	free(mini->home);
+	close(mini->in_fd);
+	close(mini->out_fd);
+	//free(mini->line);
 	printf("exit\n");
-	exit(10);
+	exit(1);
 }
 
 void	free_line(char *line_read)
