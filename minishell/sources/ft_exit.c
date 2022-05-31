@@ -15,8 +15,11 @@
 void	ft_exit(t_struct *mini)
 {
 	free_char_array2(mini->commands);
-	free_char_array2(mini->env.content);
-	free_char_array2(mini->env.key);
+	if (*mini->env.env)
+	{
+		free_char_array2(mini->env.content);
+		free_char_array2(mini->env.key);
+	}
 	free_char_array2(mini->tokens);
 	if (mini->path)
 		free_char_array(mini->path);
