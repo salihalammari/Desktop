@@ -29,11 +29,9 @@ void	ft_pwd(t_struct *mini)
 
 char	*get_cwd_buf(void)
 {
-	size_t	size;
 	char	*buf;
 
-	size = 2000;
-	buf = NULL;
-	buf = getcwd(buf, size);
+	buf = malloc(sizeof(char) * 2000);
+	getcwd(buf, 2000);
 	return (buf);
 }
