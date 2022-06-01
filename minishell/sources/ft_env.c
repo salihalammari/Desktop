@@ -25,6 +25,11 @@ void	ft_env(t_struct *mini)
 			ft_putchar_fd('=', mini->out_fd);
 			ft_putendl_fd(mini->env.content[i], mini->out_fd);
 		}
+		else if (mini->env.content[i][1] == '\"')
+		{
+			ft_putstr_fd(mini->env.key[i], mini->out_fd);
+			ft_putendl_fd("=", mini->out_fd);
+		}
 		i++;
 	}
 	g_ret_number = 0;
