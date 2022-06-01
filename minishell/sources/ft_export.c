@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:03:22 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:03:23 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	take_off_plus(char *str)
@@ -62,8 +74,10 @@ void	ft_export(t_struct *mini)
 				i++;
 				continue ;
 			}
+			else if (find_char(mini->tokens[i], '=') != (int)ft_strlen(mini->tokens[i]))
+				add_env(mini, env_aux[0], "\"\"");
 			else
-				add_env(mini, env_aux[0], "\'\'");
+				add_env(mini, env_aux[0], NULL);
 			i++;
 			continue ;
 		}
@@ -106,7 +120,10 @@ void	add_env(t_struct *mini, char *new_key, char *new_content)
 		i++;
 	}
 	mini->env_aux.key[i] = ft_strdup(new_key);
-	mini->env_aux.content[i] = ft_strdup(new_content);
+	if (new_content)
+		mini->env_aux.content[i] = ft_strdup(new_content);
+	else
+		mini->env_aux.content[i] = ft_strdup("\0");
 	i++;
 	mini->env_aux.key[i] = NULL;
 	mini->env_aux.content[i] = NULL;
