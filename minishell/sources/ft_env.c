@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:02:21 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:02:23 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_env(t_struct *mini)
@@ -7,7 +19,7 @@ void	ft_env(t_struct *mini)
 	i = 0;
 	while (i < mini->env.len)
 	{
-		if (mini->env.content[i][1] != '\'')
+		if (mini->env.content[i][1] != '\"' && mini->env.content[i][0] != '\0')
 		{
 			ft_putstr_fd(mini->env.key[i], mini->out_fd);
 			ft_putchar_fd('=', mini->out_fd);
