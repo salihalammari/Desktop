@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:03:07 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:03:09 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	plus_search(char *key)
@@ -39,8 +51,10 @@ void    print_export(t_struct *mini)
 		i = 0;
     	while (i < mini->env.len)
     	{
-			if (ft_isalnum(mini->env.content[i][0]))
+			if (!(mini->env.content[i][0] == '\"' && mini->env.content[i][1] == '\"') && mini->env.content[i][0] != '\0')
     	    	printf("declare -x %s=\"%s\"\n", mini->env.key[i], mini->env.content[i]);
+			else if (mini->env.content[i][0] == '\0')
+				printf("declare -x %s\n", mini->env.key[i]);
 			else
 				printf("declare -x %s=%s\n", mini->env.key[i], mini->env.content[i]);
     	    i++;
