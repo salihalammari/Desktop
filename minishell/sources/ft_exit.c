@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-bool	all_is_digit(char *str)
+int	all_is_digit(char *str)
 {
 	int	i;
 
@@ -20,10 +20,10 @@ bool	all_is_digit(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }
 
 void	ft_exit(t_struct *mini)
@@ -31,7 +31,7 @@ void	ft_exit(t_struct *mini)
 	int	ex;
 
 	printf("exit\n");
-	if (mini->tokens[1] && !mini->tokens[2] && all_is_digit(mini->tokens[1])== true)
+	if (mini->tokens[1] && !mini->tokens[2] && all_is_digit(mini->tokens[1]) == 1)
 	{
 		free_char_array2(mini->commands);
 		if (*mini->env.env)
@@ -46,14 +46,15 @@ void	ft_exit(t_struct *mini)
 		close(mini->out_fd);
 		ex = ft_atoi(mini->tokens[1]);
 		free_char_array(mini->tokens);
+		free(mini->line_read);
 		exit(ex);
 	}
-	else if (mini->tokens[2])
+	else if (mini->tokens[1] && mini->tokens[2])
 	{
 		printf("minishell: exit: too many arguments\n");
 		return ;
 	}
-	else if (mini->tokens[1] && !mini->tokens[2] && all_is_digit(mini->tokens[1]) == false)
+	else if (mini->tokens[1] && !mini->tokens[2] && all_is_digit(mini->tokens[1]) == 0)
 	{
 		printf("bash: exit: %s: numeric argument required\n", mini->tokens[1]);
 		return ;
@@ -67,6 +68,7 @@ void	ft_exit(t_struct *mini)
 	if (mini->path)
 		free_char_array(mini->path);
 	free(mini->home);
+	free(mini->line_read);
 	close(mini->in_fd);
 	close(mini->out_fd);
 	free_char_array(mini->tokens);
