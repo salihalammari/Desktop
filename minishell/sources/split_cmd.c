@@ -15,7 +15,6 @@
 void	split_cmd(t_struct *mini, char *in, int i)
 {
 	int	j;
-	char	*copy;
 
 	init_split_struct(mini);
 	in = clean_spaces(in);
@@ -109,8 +108,6 @@ void	rider_before_cmd(t_struct *mini, char *in, int i)
 int	count_pipe(t_struct *mini, char *in, int i)
 {
 	char	**copy;
-	char	*aux;
-	int		n;
 
 	if (in[i] == '|' || in[i] == '<' || in[i] == '>')
 	{
