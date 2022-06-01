@@ -52,7 +52,7 @@ void    print_export(t_struct *mini)
     	while (i < mini->env.len)
     	{
 			if (!(mini->env.content[i][0] == '\"' && mini->env.content[i][1] == '\"') && mini->env.content[i][0] != '\0')
-    	    	printf("declare -x %s=\"%s\"\n", mini->env.key[i], mini->env.content[i]);
+				printf("declare -x %s=\"%s\"\n", mini->env.key[i], mini->env.content[i]);
 			else if (mini->env.content[i][0] == '\0')
 				printf("declare -x %s\n", mini->env.key[i]);
 			else
