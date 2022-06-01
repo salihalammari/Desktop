@@ -14,13 +14,14 @@
 
 void	ft_exit(t_struct *mini)
 {
+	int	ex;
+
 	free_char_array2(mini->commands);
 	if (*mini->env.env)
 	{
 		free_char_array2(mini->env.content);
 		free_char_array2(mini->env.key);
 	}
-	free_char_array2(mini->tokens);
 	if (mini->path)
 		free_char_array(mini->path);
 	free(mini->home);
@@ -28,7 +29,14 @@ void	ft_exit(t_struct *mini)
 	close(mini->out_fd);
 	//free(mini->line);
 	printf("exit\n");
-	exit(1);
+	if (mini->tokens[1])
+	{
+		ex = ft_atoi(mini->tokens[1]);
+		free_char_array(mini->tokens);
+		exit(ex);
+	}
+	free_char_array(mini->tokens);
+	exit(0);
 }
 
 void	free_line(char *line_read)
