@@ -1,25 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:03:35 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:03:37 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_pwd(t_struct *mini)
 {
-	char	*buf;
+	char	path[2000];
 
-	buf = get_cwd_buf();
-	ft_putendl_fd(buf, mini->out_fd);
-	if (buf == NULL)
-		g_ret_number = 1;
-	else
-		g_ret_number = 0;
-	free(buf);
-}
-
-char	*get_cwd_buf(void)
-{
-	size_t	size;
-	char	*buf;
-
-	size = 2000;
-	buf = NULL;
-	buf = getcwd(buf, size);
-	return (buf);
+	if (mini->tokens[1])
+	{
+		write(1, "minishell: pwd: too many arguments\n", 24);
+		return ;
+	}
+	getcwd(path, 2000);
+	g_ret_number = 0;
+	write(1, path, ft_strlen(path));
+	write(1, "\n", 1);
 }
