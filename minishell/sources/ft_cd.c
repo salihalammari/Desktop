@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:01:51 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:01:53 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	change_pwd(t_struct *mini)
@@ -10,7 +22,8 @@ static void	change_pwd(t_struct *mini)
 		if (ft_strncmp(mini->env.key[i], "PWD", 3) == 0)
 		{
 			free(mini->env.content[i]);
-			mini->env.content[i] = get_cwd_buf();
+			mini->env.content[i] = malloc(sizeof(char) * 2000);
+			getcwd(mini->env.content[i], 2000);
 			return ;
 		}
 		i++;
@@ -27,7 +40,8 @@ static void	change_oldpwd(t_struct *mini)
 		if (ft_strncmp(mini->env.key[i], "OLDPWD", 6) == 0)
 		{
 			free(mini->env.content[i]);
-			mini->env.content[i] = get_cwd_buf();
+			mini->env.content[i] = malloc(sizeof(char) * 2000);
+			getcwd(mini->env.content[i], 2000);
 			return ;
 		}
 		i++;
