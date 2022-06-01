@@ -18,11 +18,22 @@ void	ft_pwd(t_struct *mini)
 
 	if (mini->tokens[1])
 	{
-		write(1, "minishell: pwd: too many arguments\n", 24);
+		printf("minishell: pwd: too many arguments\n");
 		return ;
 	}
 	getcwd(path, 2000);
 	g_ret_number = 0;
 	write(1, path, ft_strlen(path));
 	write(1, "\n", 1);
+}
+
+char	*get_cwd_buf(void)
+{
+	size_t	size;
+	char	*buf;
+
+	size = 2000;
+	buf = NULL;
+	buf = getcwd(buf, size);
+	return (buf);
 }
