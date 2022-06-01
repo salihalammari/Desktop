@@ -53,10 +53,20 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	aux = ft_strtrim(in, " ");
 	mini->has_flag = false;
 	i = 0;
-	while (in[i] == '-' && in[i + 1] == 'n' && in[i + 2] == ' ')
+	if (in[i] == '-' && in[i + 1] == 'n' && in[i + 2] == ' ')
 	{
+		while (in[i] == '-' && in[i + 1] == 'n' && in[i + 2] == ' ')
+		{
+			mini->has_flag = true;
+			i += 3;
+		}
+	}
+	else if (in[i] == '-' && in[i + 1] == 'n')
+	{
+		while (in[i + 1] == 'n')
+			i++;
 		mini->has_flag = true;
-		i += 3;
+		++i;
 	}
 	while (in[i] == ' ')
 		i++;
@@ -68,7 +78,6 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	aux[c] = '\0';
 	free(mini->token.to_print);
 	mini->token.to_print = aux;
-	//free(aux);
 }
 
 void	tokenizer(t_struct *mini)
