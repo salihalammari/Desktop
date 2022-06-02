@@ -78,6 +78,11 @@ void	rider_before_cmd(t_struct *mini, char *in, int i)
 	int		n;
 
 	split = ft_split(in, ' ');
+	if (!split)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 	n = 2;
 	if (in[1] != ' ')
 		n = 1;
