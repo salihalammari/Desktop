@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_in.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:04:56 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:04:57 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	redirect_in(t_struct *mini, int j, char *aux)
@@ -13,7 +25,10 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 		{
 			file = ft_split(&mini->commands[j][1], ' ');
 			if (!file)
-				return (free(file));
+			{
+				printf("malloc error\n");
+				exit(1);
+			}
 			mini->in_fd = open(file[0], O_RDONLY, 0777);
 			if (mini->in_fd == -1 && mini->error_name_file == NULL)
 				mini->error_name_file = ft_strdup(file[0]);
@@ -36,8 +51,11 @@ char	**double_redir(t_struct *mini, char **file, int j)
 	int old_stdin;
 
 	file = ft_split(&mini->commands[j][2], ' ');
-	if (!file)
-		return (0);
+	if  (!file)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 	old_stdin = dup(STDIN_FILENO);
 	read_until (file[0]);
 	mini->in_fd = dup(0);
