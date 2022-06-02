@@ -107,11 +107,104 @@ void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
 	}
 }
 
+int	str_ncmp(char *str1, char *str2, int n)
+{
+	while (--n > 0 && *str1 && *str2 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+	return (*str2 - *str1);
+}
+
+int	str_ichr(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
+	if (str[i] == c)
+		return (i);
+	return (-1);
+}
+
+char	*path_join(char *path, char *bin)
+{
+	char	*joined;
+	int		i;
+	int		j;
+
+	joined = malloc(sizeof(char) * (str_ichr(path, 0) + str_ichr(bin, 0) + 2));
+	if (!joined)
+	{
+		free(joined);
+		return (NULL);
+	}
+	i = 0;
+	j = 0;
+	while (path[j])
+		joined[i++] = path[j++];
+	joined[i++] = '/';
+	j = 0;
+	while (bin[j])
+		joined[i++] = bin[j++];
+	joined[i] = 0;
+	return (joined);
+}
+
+char	*str_ndup(char *str, unsigned int n)
+{
+	char			*duped;
+	unsigned int	i;
+
+	i = 0;
+	duped = malloc(sizeof(char) * (n + 1));
+	if (!duped)
+	{
+		free(duped);
+		return (NULL);
+	}
+	while (i < n)
+		duped[i++] = *str++;
+	duped[n] = 0;
+	return (duped);
+}
+
+char	*get_path(char *cmd, char **env)
+{
+	char	*path;
+	char	*dir;
+	char	*bin;
+	int		i;
+
+	i = 0;
+	while (env[i] && str_ncmp(env[i], "PATH=", 5))
+		i++;
+	if (!env[i])
+		return (cmd);
+	path = env[i] + 5;
+	while (path && str_ichr(path, ':') > -1)
+	{
+		dir = str_ndup(path, str_ichr(path, ':'));
+		bin = path_join(dir, cmd);
+		free(dir);
+		if (access(bin, F_OK) == 0)
+			return (bin);
+		free(bin);
+		path += str_ichr(path, ':') + 1;
+	}
+	return (cmd);
+}
+
 void	ft_execve_pipe(t_struct *mini, int i, char *command, int out)
 {
+	char	*path;
+
 	if (mini->tokens[0])
 	{
-		g_ret_number = execve(mini->tokens[0], &mini->tokens[0],
+		path = get_path(mini->tokens[0], mini->env.env);
+		g_ret_number = execve(path, &mini->tokens[0],
 				mini->env.env);
 		while (mini->path && mini->path[i] != NULL)
 		{	
