@@ -49,7 +49,10 @@ void	create_env(t_struct *mini, char **my_env, int flag)
 	{
 		env_aux = ft_split(mini->env.env[i], '=');
 		if (!env_aux)
-			break ;
+		{
+			printf("malloc error\n");
+			exit(1);
+		}
 		mini->env.key[i] = ft_strdup(env_aux[0]);
 		if (env_aux[1])
 			mini->env.content[i] = ft_strdup(env_aux[1]);
