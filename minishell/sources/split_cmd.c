@@ -107,8 +107,6 @@ void	rider_before_cmd(t_struct *mini, char *in, int i)
 
 int	count_pipe(t_struct *mini, char *in, int i)
 {
-	char	**copy;
-
 	if (in[i] == '|' || in[i] == '<' || in[i] == '>')
 	{
 		if (in[i] == '|' && mini->split.q == 0)
