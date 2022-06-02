@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:02:07 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:02:09 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_echo(t_struct *mini)
@@ -41,6 +53,11 @@ static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 	i = 2;
 	str = ft_strdup("");
 	split = ft_split(mini->commands[1], ' ');
+	if (!split)
+	{
+		printf("minishell: malloc error\n");
+		exit(1);
+	}
 	if (split[0][1] != '\0')
 		i = 1;
 	while (split[i])
