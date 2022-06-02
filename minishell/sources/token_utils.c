@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:06:40 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:06:42 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	get_home_sign(t_struct *mini, t_token *tk)
@@ -112,6 +124,11 @@ void	finish_tokenizer(t_struct *mini, t_token *tk)
 	mini->token.to_exec = ft_substr(tk->end, tk->i + 1, tk->posic);
 	tokenizer_clean_quotes(mini, mini->token.to_print, 0, 0);
 	mini->tokens = ft_split(tk->end, ' ');
+	if (!mini->tokens)
+	{
+		printf("malloc error\n");
+		exit(1);
+	}
 	free_tk(tk);
 	free (mini->line);
 }
