@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:04:42 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:04:44 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -114,7 +126,7 @@ void	print_echo(t_struct *mini, char *mini_tokens_i);
 ** ft_env.c
 */
 void	ft_env(t_struct *mini);
-void	create_env(t_struct *mini, char **my_env);
+void	create_env(t_struct *mini, char **my_env, int flag);
 void	len_env(t_struct *mini);
 void	init_struct_env(t_struct *mini);
 
