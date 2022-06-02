@@ -14,12 +14,28 @@
 
 void	initialize(t_struct *mini, char **env)
 {
+	char	*pwd;
+	int		flag;
+
 	mini->last_redir = 0;
 	g_ret_number = 0;
 	mini->tokens = (char **) NULL;
+	if (!*env)
+	{
+		flag = 1;
+		mini->env.env = malloc(sizeof(char *) * 4);
+		mini->env.env[0] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin");
+		mini->env.env[1] = ft_strdup("SHLVL=1");
+		pwd = get_cwd_buf();
+		mini->env.env[2] = ft_strjoin("PWD=", pwd);
+		free(pwd);
+		mini->env.env[3] = NULL;
+		create_env(mini, env, flag);
+	}
 	if (*env)
 	{
-		create_env(mini, env);
+		flag = 0;
+		create_env(mini, env, flag);
 		init_path(mini);
 		mini->home = ft_strdup(find_env(mini, "HOME"));
 	}
