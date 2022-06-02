@@ -47,6 +47,13 @@ void	spaces_in_pipe(t_struct *mini, int i, char *command)
 	free(command);
 	command = ft_strjoin(copy, mini->tokens[i - 1]);
 	free(copy);
+	if (mini->tokens[i - 1][0] == '|' && mini->tokens[i - 1][1])
+	{
+		copy = ft_strdup(mini->tokens[i - 1]);
+		free(mini->tokens[i - 1]);
+		mini->tokens[i - 1] = ft_strdup(&copy[1]);
+		free(copy);
+	}
 	g_ret_number = execve(command, &mini->tokens[i - 1], mini->env.env);
 	free(command);
 }
