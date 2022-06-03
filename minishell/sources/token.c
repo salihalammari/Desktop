@@ -19,7 +19,7 @@ int	tokenizer_find_char(char *string, char needle)
 	i = 0;
 	while (string[i])
 	{
-		if (string[i] == needle || string[i] == D_QUOTE || string[i] == QUOTE)
+		if (string[i] == needle || (string[i] == D_QUOTE && string[i - 1] == ' ')|| (string[i] == QUOTE && string[i - 1] == ' '))
 			return (i);
 		if (string[i] == '?')
 			return (i + 1);
