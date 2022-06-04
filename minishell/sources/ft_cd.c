@@ -72,8 +72,7 @@ int	ft_cd(t_struct *mini)
 		else if (ft_strncmp(mini->tokens[1], "-", 1) == 0 && mini->tokens[1][1] == '\0')
 		{
 			i = 0;
-			while (ft_strncmp(mini->env.key[i++], "OLDPWD", 6))
-			path = ft_strdup(mini->env.content[i]);
+			path = ft_strdup(find_env(mini, "OLDPWD"));
 			token_aux = ft_strdup(path);
 			free(path);
 			i = 0;
