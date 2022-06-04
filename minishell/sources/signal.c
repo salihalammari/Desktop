@@ -20,8 +20,7 @@ static void	write_exit(t_struct *mini)
 	char	*c;
 
 	i = 0;
-	while (ft_strncmp(mini->env.key[i++], "PWD", 3))
-	c = ft_itoa(ft_strlen(mini->env.content[i]));
+	c = ft_itoa(ft_strlen(find_env(mini, "PWD")));
 	ex = ft_strjoin("\033[1A\033[", c);
 	free(c);
 	copy = ft_strdup(ex);
