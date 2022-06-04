@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_pipe.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 12:11:40 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/06/03 12:11:43 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	exec_commands(t_struct *mini, int out)
@@ -87,7 +99,7 @@ void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
 	else
 	{
 		pid = fork();
-		run_signals(2);
+		run_signals(mini, 2);
 		if (pid < 0)
 		{
 			printf("Fork error\n");
@@ -187,7 +199,9 @@ char	*get_path(char *cmd, char **env)
 	while (path && str_ichr(path, ':') > -1)
 	{
 		dir = str_ndup(path, str_ichr(path, ':'));
+		//ft_exit(dir);
 		bin = path_join(dir, cmd);
+		//ft_exit(bin);
 		free(dir);
 		if (access(bin, F_OK) == 0)
 			return (bin);
