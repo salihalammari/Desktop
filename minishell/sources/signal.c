@@ -33,11 +33,6 @@ static void	write_exit(t_struct *mini)
 
 void	run_signals(t_struct *mini ,int sig)
 {
-	int	i;
-	char	*ex;
-	char	*copy;
-	char	*c;
-
 	if (sig == 1)
 	{
 		signal(SIGINT, restore_prompt);
