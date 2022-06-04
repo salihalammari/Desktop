@@ -106,6 +106,17 @@ void	is_builtin(char *cmd, t_struct *mini);
 void	run_builtin(t_struct *mini);
 
 /*
+** check_quotes.c
+*/
+int check_quote_s1(char *str);
+int check_quotes(char *str1, char *str2);
+
+/*
+** expander.c
+*/
+char	*expander(t_struct *mini, char *file);
+
+/*
 ** find_env.c
 */
 char	*find_env(t_struct *mini, char *needle);
@@ -142,10 +153,8 @@ void	free_char_array2(char **array);
 ** ft_export_utils.c
 */
 int		plus_search(char *key);
-int 	check_quote_s1(char *str);
 int		ft_strind(char *str, int c);
 void    print_export(t_struct *mini);
-int 	check_quotes(char *str1, char *str2);
 void	exec_verify(t_struct *mini, char **evn_aux, int i);
 void	exec_export_add(t_struct *mini, char *key, char *value, int i);
 
