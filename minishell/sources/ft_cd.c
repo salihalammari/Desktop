@@ -63,13 +63,17 @@ int	ft_cd(t_struct *mini)
 			path = ft_strdup(mini->home);
 			token_aux = ft_strdup(path);
 			free(path);
+			change_oldpwd(mini);
 			g_ret_number = chdir(token_aux);
+			change_pwd(mini);
 			free(token_aux);
 			return (0);
 		}
 		else if (ft_strncmp(mini->tokens[1], "-", 1) == 0 && mini->tokens[1][1] == '\0')
 		{
-			path = ft_strdup(mini->home);
+			i = 0;
+			while (ft_strncmp(mini->env.key[i++], "OLDPWD", 6))
+			path = ft_strdup(mini->env.content[i]);
 			token_aux = ft_strdup(path);
 			free(path);
 			i = 0;
@@ -80,7 +84,9 @@ int	ft_cd(t_struct *mini)
 					break ;
 				i++;
 			}
+			change_oldpwd(mini);
 			g_ret_number = chdir(token_aux);
+			change_pwd(mini);
 			printf("%s\n", mini->env.content[i]);
 			free(token_aux);
 			return (0);
