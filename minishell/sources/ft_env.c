@@ -54,8 +54,10 @@ void	create_env(t_struct *mini, char **my_env, int flag)
 			exit(1);
 		}
 		mini->env.key[i] = ft_strdup(env_aux[0]);
-		if (env_aux[1])
+		if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6))
 			mini->env.content[i] = ft_strdup(env_aux[1]);
+		else if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6) == 0)
+			mini->env.content[i] = ft_strdup(find_env(mini, "PWD"));
 		else
 			mini->env.content[i] = ft_strdup("");
 		free_char_array(env_aux);
