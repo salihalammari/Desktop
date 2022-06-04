@@ -217,7 +217,7 @@ void	ft_execve_pipe(t_struct *mini, int i, char *command, int out);
 /*
 ** signal.c
 */
-void	run_signals(int sig);
+void	run_signals(t_struct *mini, int sig);
 void	restore_prompt(int sig);
 void	ctrl_c(int sig);
 void	back_slash(int sig);
