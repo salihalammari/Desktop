@@ -15,6 +15,7 @@
 void	redirect_in(t_struct *mini, int j, char *aux)
 {
 	char	**file;
+	char	*copy;
 
 	if (mini->commands[j][0] == '<')
 	{
@@ -28,6 +29,13 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 			{
 				printf("malloc error\n");
 				exit(1);
+			}
+			if (file[0][0] == '$')
+			{
+				copy = ft_strdup(file[0]);
+				free(file[0]);
+				file[0] = expander(mini, copy);
+				free(copy);
 			}
 			mini->in_fd = open(file[0], O_RDONLY, 0777);
 			if (mini->in_fd == -1 && mini->error_name_file == NULL)
