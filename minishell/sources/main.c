@@ -46,7 +46,7 @@ void	get_line(t_struct *mini)
 	char	*prompt;
 
 	prompt = create_prompt();
-	run_signals(1);
+	run_signals(mini, 1);
 	mini->line_read = readline(prompt);
 	if (mini->line_read && *mini->line_read)
 		add_history(mini->line_read);
@@ -105,6 +105,6 @@ int	main(int ac, char **av, char **env)
 			free(mini.line_read);
 		}
 		else
-			run_signals(3);
+			run_signals(&mini, 3);
 	}
 }
