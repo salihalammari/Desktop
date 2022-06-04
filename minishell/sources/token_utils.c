@@ -50,6 +50,8 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	n_env = ft_substr(mini->line, tk->i + 1, tk->posic);
 	if (mini->line[tk->i + 1] != '?' && find_env(mini, n_env))
 		extend = ft_strdup(find_env(mini, n_env));
+	else if (mini->line[tk->i + 1] != '?' && !find_env(mini, n_env))
+		extend = ft_strdup(n_env);
 	else if (mini->line[tk->i + 1] == '?')
 		extend = ft_itoa(g_ret_number);
 	else
