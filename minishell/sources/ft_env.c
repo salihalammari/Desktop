@@ -17,6 +17,11 @@ void	ft_env(t_struct *mini)
 	int	i;
 
 	i = 0;
+	if (mini->tokens[1])
+	{
+		printf("env: %s: No such file or directory\n", mini->tokens[1]);
+		return ;
+	}
 	while (i < mini->env.len)
 	{
 		if (mini->env.content[i][1] != '\"' && mini->env.content[i][0] != '\0')
