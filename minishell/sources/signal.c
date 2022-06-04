@@ -12,8 +12,33 @@
 
 #include "minishell.h"
 
-void	run_signals(int sig)
+static void	write_exit(t_struct *mini)
 {
+	int	i;
+	char	*ex;
+	char	*copy;
+	char	*c;
+
+	i = 0;
+	while (ft_strncmp(mini->env.key[i++], "PWD", 3))
+	c = ft_itoa(ft_strlen(mini->env.content[i]));
+	ex = ft_strjoin("\033[1A\033[", c);
+	free(c);
+	copy = ft_strdup(ex);
+	free(ex);
+	ex = ft_strjoin(copy, "C exit\n");
+	free(copy);
+	write(1, ex, ft_strlen(ex));
+	free(ex);
+}
+
+void	run_signals(t_struct *mini ,int sig)
+{
+	int	i;
+	char	*ex;
+	char	*copy;
+	char	*c;
+
 	if (sig == 1)
 	{
 		signal(SIGINT, restore_prompt);
@@ -26,7 +51,7 @@ void	run_signals(int sig)
 	}
 	if (sig == 3)
 	{
-		write(1,"\033[1A\033[44C exit\n",15);
+		write_exit(mini);
 		exit(0);
 	}
 }
