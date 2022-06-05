@@ -1,95 +1,137 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 21:02:21 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/05/29 21:02:23 by sghajdao         ###   ########.fr       */
+/*   Created: 2022/05/29 21:03:22 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:03:23 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_struct *mini)
+static void	take_off_plus(char *str)
 {
 	int	i;
 
-	i = 0;
-	if (mini->tokens[1])
+	if (str[ft_strlen(str) - 1] == '+')
 	{
-		printf("env: %s: No such file or directory\n", mini->tokens[1]);
-		return ;
+		i = 0;
+		while (str[i + 1])
+			i++;
+		str[i] = '\0';
 	}
-	while (i < mini->env.len)
-	{
-		if (mini->env.content[i][1] != '\"' && mini->env.content[i][0] != '\0')
-		{
-			ft_putstr_fd(mini->env.key[i], mini->out_fd);
-			ft_putchar_fd('=', mini->out_fd);
-			ft_putendl_fd(mini->env.content[i], mini->out_fd);
-		}
-		else if (mini->env.content[i][1] == '\"')
-		{
-			ft_putstr_fd(mini->env.key[i], mini->out_fd);
-			ft_putendl_fd("=", mini->out_fd);
-		}
-		i++;
-	}
-	g_ret_number = 0;
 }
 
-void	create_env(t_struct *mini, char **my_env, int flag)
+int	if_plus(char *key, char *value, t_struct *mini)
+{
+	int		i;
+	int		flag;
+	char	*aux;
+
+	flag = plus_search(key);
+	if (flag == 1)
+	{
+		i = 0;
+		take_off_plus(key);
+		while (mini->env.key[i])
+		{
+			if (ft_strncmp(mini->env.key[i], key, ft_strlen(mini->env.key[i])) == 0)
+			{
+				aux = ft_strdup(mini->env.content[i]);
+				free(mini->env.content[i]);
+				mini->env.content[i] = ft_strjoin(aux, value);
+				free(aux);
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
+void	ft_export(t_struct *mini)
 {
 	int		i;
 	char	**env_aux;
 
-	if (flag == 0)
-		mini->env.env = my_env;
-	len_env(mini);
-	init_struct_env(mini);
-	i = 0;
-	while (mini->env.env[i])
+	print_export(mini);
+	i = 1;
+	while (mini->tokens[i])
 	{
-		env_aux = ft_split(mini->env.env[i], '=');
+		env_aux = ft_split(mini->tokens[i], '=');
 		if (!env_aux)
 		{
 			printf("malloc error\n");
 			exit(1);
 		}
-		mini->env.key[i] = ft_strdup(env_aux[0]);
-		if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6))
-			mini->env.content[i] = ft_strdup(env_aux[1]);
-		else if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6) == 0)
-			mini->env.content[i] = ft_strdup(find_env(mini, "PWD"));
-		else
-			mini->env.content[i] = ft_strdup("");
-		free_char_array(env_aux);
-		env_aux = NULL;
+		if (!env_aux[1])
+		{
+			if (!check_quote_s1(env_aux[0]))
+        		return ;
+			take_off_quotes(env_aux[0]);
+			if (find_env(mini, env_aux[0]))
+			{
+				i++;
+				continue ;
+			}
+			else if (find_char(mini->tokens[i], '=') != (int)ft_strlen(mini->tokens[i]))
+				add_env(mini, env_aux[0], "\"\"");
+			else
+				add_env(mini, env_aux[0], NULL);
+			i++;
+			continue ;
+		}
+		exec_verify(mini, env_aux, i);
 		i++;
 	}
-	mini->env.key[i] = NULL;
-	mini->env.content[i] = NULL;
+	g_ret_number = 0;
 }
 
-void	len_env(t_struct *mini)
+void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
+{
+    char    *key;
+    char    *value;
+
+    key = ft_strdup(env_aux[0]);
+    value = ft_strdup(env_aux[1]);
+    if (!check_quotes(key, value))
+        return ;
+	if ((find_char(key, '\'') != (int)ft_strlen(key)) || (find_char(key, '\"') != (int)ft_strlen(key)))
+	{
+		printf("minishell: quotes error\n");
+		return ;
+	}
+    take_off_quotes(key);
+    take_off_quotes(value);
+	exec_export_add(mini, key, value, i);
+}
+
+void	add_env(t_struct *mini, char *new_key, char *new_content)
 {
 	int	i;
 
+	mini->env.len++;
+	alloc_env_aux(mini);
 	i = 0;
-	while (mini->env.env[i])
+	while (i < mini->env.len - 1)
+	{
+		mini->env_aux.key[i] = ft_strdup(mini->env.key[i]);
+		mini->env_aux.content[i] = ft_strdup(mini->env.content[i]);
 		i++;
-	mini->env.len = i;
-}
-
-void	init_struct_env(t_struct *mini)
-{
-	mini->env.key = malloc(sizeof(char *) * (mini->env.len + 1));
-	if (!mini->env.key)
-		exit(EXIT_FAILURE);
-	mini->env.content = malloc(sizeof(char *) * (mini->env.len + 1));
-	if (!mini->env.content)
-		exit(EXIT_FAILURE);
-	copy_export(mini, 0);
+	}
+	mini->env_aux.key[i] = ft_strdup(new_key);
+	if (new_content)
+		mini->env_aux.content[i] = ft_strdup(new_content);
+	else
+		mini->env_aux.content[i] = ft_strdup("\0");
+	i++;
+	mini->env_aux.key[i] = NULL;
+	mini->env_aux.content[i] = NULL;
+	free_char_array(mini->env.key);
+	free_char_array(mini->env.content);
+	mini->env.key = mini->env_aux.key;
+	mini->env.content = mini->env_aux.content;
 }
