@@ -46,7 +46,8 @@ void    sort_2D_str(t_struct *mini, int len)
 {
     int        i;
     int        j;
-    char    *tmp;
+    char    *tmp_k;
+	char	*tmp_c;
 
     i = -1;
     j = 0;
@@ -55,69 +56,70 @@ void    sort_2D_str(t_struct *mini, int len)
         j = i;
         while (++j < len)
         {
-            if (mini->sorted.env[j] && ft_strncmp(mini->sorted.env[i], mini->sorted.env[j], ft_strlen(mini->sorted.env[i])) > 0)
+            if (mini->sorted.key[j] && ft_strncmp(mini->sorted.key[i], mini->sorted.key[j], ft_strlen(mini->sorted.key[i])) > 0)
             {
-                tmp = ft_strdup(mini->sorted.env[i]);
-                free(mini->sorted.env[i]);
-                mini->sorted.env[i] =ft_strdup(mini->sorted.env[j]);
-                free(mini->sorted.env[j]);
-                mini->sorted.env[j] = ft_strdup(tmp);
-                free(tmp);
+                tmp_k = ft_strdup(mini->sorted.key[i]);
+				tmp_c = ft_strdup(mini->sorted.content[i]);
+                free(mini->sorted.key[i]);
+				free(mini->sorted.content[i]);
+                mini->sorted.key[i] = ft_strdup(mini->sorted.key[j]);
+				mini->sorted.content[i] = ft_strdup(mini->sorted.content[j]);
+                free(mini->sorted.key[j]);
+				free(mini->sorted.content[j]);
+                mini->sorted.key[j] = ft_strdup(tmp_k);
+				mini->sorted.content[j] = ft_strdup(tmp_c);
+                free(tmp_k);
+				free(tmp_c);
             }
         }
     }
     mini->sorted.env[i] = NULL;
 }
 
-void    print_export(t_struct *mini)
+void	copy_export(t_struct *mini)
 {
-    int i;
-	char	**env_aux;
+	int		i;
 
-	i = 0;
 	mini->sorted.env = malloc(sizeof(char *) * (mini->env.len + 1));
+	mini->sorted.key = malloc(sizeof(char *) * (mini->env.len + 1));
+	if (!mini->sorted.key)
+		exit(EXIT_FAILURE);
+	mini->sorted.content = malloc(sizeof(char *) * (mini->env.len + 1));
+	if (!mini->sorted.content)
+		exit(EXIT_FAILURE);
+	i = 0;
 	while (mini->env.env[i])
 	{
 		mini->sorted.env[i] = ft_strdup(mini->env.env[i]);
 		i++;
 	}
+	mini->sorted.env[i] = NULL;
 	i = 0;
-	while (mini->sorted.env[i])
-		i++;
-	mini->sorted.len = i;
-	mini->sorted.key = malloc(sizeof(char *) * (mini->sorted.len + 1));
-	if (!mini->sorted.key)
-		exit(EXIT_FAILURE);
-	mini->sorted.content = malloc(sizeof(char *) * (mini->sorted.len + 1));
-	if (!mini->sorted.content)
-		exit(EXIT_FAILURE);
-	sort_2D_str(mini, mini->sorted.len);
-	i = 0;
-	while (mini->sorted.env[i])
+	while (mini->env.key[i])
 	{
-		env_aux = ft_split(mini->sorted.env[i], '=');
-		if (!env_aux)
-		{
-			printf("malloc error\n");
-			exit(1);
-		}
-		mini->sorted.key[i] = ft_strdup(env_aux[0]);
-		if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6))
-			mini->sorted.content[i] = ft_strdup(env_aux[1]);
-		else if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6) == 0)
-			mini->sorted.content[i] = ft_strdup(find_env(mini, "PWD"));
-		else
-			mini->sorted.content[i] = ft_strdup("");
-		free_char_array(env_aux);
-		env_aux = NULL;
+		mini->sorted.key[i] = ft_strdup(mini->env.key[i]);
 		i++;
 	}
 	mini->sorted.key[i] = NULL;
+	i = 0;
+	while (mini->env.content[i])
+	{
+		mini->sorted.content[i] = ft_strdup(mini->env.content[i]);
+		i++;
+	}
 	mini->sorted.content[i] = NULL;
+}
+
+void    print_export(t_struct *mini)
+{
+    int i;
+
     if (!mini->tokens[1])
 	{
+		copy_export(mini);
+		sort_2D_str(mini, mini->env.len);
 		i = 0;
-    	while (i < mini->sorted.len)
+    	while (i < mini->env.len)
     	{
 			if (!(mini->sorted.content[i][0] == '\"' && mini->sorted.content[i][1] == '\"') && mini->sorted.content[i][0] != '\0')
 				printf("declare -x %s=\"%s\"\n", mini->sorted.key[i], mini->sorted.content[i]);
@@ -129,27 +131,6 @@ void    print_export(t_struct *mini)
     	}
 	}
 }
-
-/* void    print_export(t_struct *mini)
-{
-    int i;
-
-    if (!mini->tokens[1])
-	{
-		sort_2D_str(mini, mini->env.len);
-		i = 0;
-    	while (i < mini->env.len)
-    	{
-			if (!(mini->env.content[i][0] == '\"' && mini->env.content[i][1] == '\"') && mini->env.content[i][0] != '\0')
-				printf("declare -x %s=\"%s\"\n", mini->env.key[i], mini->env.content[i]);
-			else if (mini->env.content[i][0] == '\0')
-				printf("declare -x %s\n", mini->env.key[i]);
-			else
-				printf("declare -x %s=%s\n", mini->env.key[i], mini->env.content[i]);
-    	    i++;
-    	}
-	}
-} */
 
 void	exec_verify(t_struct *mini, char **env_aux, int i)
 {
