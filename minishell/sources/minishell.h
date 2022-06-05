@@ -100,7 +100,7 @@ typedef struct s_struct
 ** Minishell functions
 */
 
-void	copy_export(t_struct *mini);
+void	copy_export(t_struct *mini, int flag);
 
 /*
 ** builtins.c
