@@ -78,6 +78,7 @@ typedef struct s_struct
 	int		in_fd;
 	int		num_tokens;
 	int		c;
+	int		redir_flag;
 	char	quote;
 	char	*line;
 	char	*line_read;
@@ -200,7 +201,7 @@ char	*create_prompt(void);
 */
 int		redirect_in(t_struct *mini, int j, char *aux);
 char	**double_redir(t_struct *mini, char **file, int j);
-void	read_until(char *end);
+void	read_until(t_struct *mini, char *end);
 char	*new_comman(int i, char **str);
 
 /*
