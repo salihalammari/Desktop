@@ -89,6 +89,7 @@ typedef struct s_struct
 	char	**tokens;
 	char	**path;
 	char	**new_env;
+	t_env	sorted;
 	t_env	env_aux;
 	t_env	env;
 	t_split	split;
@@ -98,6 +99,8 @@ typedef struct s_struct
 /*
 ** Minishell functions
 */
+
+//void	add_export(t_struct *mini, char *new_key, char *new_content);
 
 /*
 ** builtins.c
