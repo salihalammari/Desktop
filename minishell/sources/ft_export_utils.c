@@ -76,10 +76,15 @@ void    sort_2D_str(t_struct *mini, int len)
     mini->sorted.env[i] = NULL;
 }
 
-void	copy_export(t_struct *mini)
+void	copy_export(t_struct *mini, int flag)
 {
 	int		i;
 
+	if (flag == 1)
+	{
+		free_char_array(mini->sorted.key);
+		free_char_array(mini->sorted.content);
+	}
 	mini->sorted.env = malloc(sizeof(char *) * (mini->env.len + 1));
 	mini->sorted.key = malloc(sizeof(char *) * (mini->env.len + 1));
 	if (!mini->sorted.key)
@@ -116,7 +121,7 @@ void    print_export(t_struct *mini)
 
     if (!mini->tokens[1])
 	{
-		copy_export(mini);
+		copy_export(mini, 1);
 		sort_2D_str(mini, mini->env.len);
 		i = 0;
     	while (i < mini->env.len)
