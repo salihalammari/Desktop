@@ -132,6 +132,8 @@ void	add_env(t_struct *mini, char *new_key, char *new_content)
 	mini->env_aux.content[i] = NULL;
 	free_char_array(mini->env.key);
 	free_char_array(mini->env.content);
+	free_char_array(mini->sorted.key);
+	free_char_array(mini->sorted.content);
 	mini->env.key = mini->env_aux.key;
 	mini->env.content = mini->env_aux.content;
 }
