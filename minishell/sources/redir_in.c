@@ -39,7 +39,10 @@ int	redirect_in(t_struct *mini, int j, char *aux)
 				printf("minishell: syntax error near unexpected token `newline'\n");
 				return (0);
 			}
-			if (file[0][0] == '$')
+			if (file[0][0] == D_QUOTE || file[0][0] == QUOTE)
+				mini->redir_flag = 1;
+			take_off_quotes(file[0]);
+			if (file[0][0] == '$' && mini->redir_flag == 0)
 			{
 				copy = ft_strdup(file[0]);
 				free(file[0]);
@@ -79,8 +82,11 @@ char	**double_redir(t_struct *mini, char **file, int j)
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (NULL);
 	}
+	if (file[0][0] == D_QUOTE || file[0][0] == QUOTE)
+		mini->redir_flag = 1;
+	take_off_quotes(file[0]);
 	old_stdin = dup(STDIN_FILENO);
-	read_until (file[0]);
+	read_until (mini, file[0]);
 	mini->in_fd = dup(0);
 	dup2(old_stdin, STDIN_FILENO);
 	close(old_stdin);
@@ -88,9 +94,11 @@ char	**double_redir(t_struct *mini, char **file, int j)
 	return (file);
 }
 
-void	read_until(char *end)
+void	read_until(t_struct *mini, char *end)
 {
 	char	*line;
+	char	*copy;
+	int		i;
 	int		fd[2];
 
 	line = ft_strdup("");
@@ -103,6 +111,13 @@ void	read_until(char *end)
 			break ;
 		if (ft_strncmp(line, end, ft_strlen(end)) == 0 && line[ft_strlen(end)] == '\0')
 			break ;
+		if (line[0] == '$' && mini->redir_flag == 0)
+		{
+			copy = ft_strdup(line);
+			free(line);
+			line = find_env(mini, &copy[1]);
+			free(copy);
+		}
 		ft_putendl_fd(line, fd[1]);
 	}
 	dup2(fd[0], 0);
