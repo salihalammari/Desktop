@@ -59,6 +59,7 @@ void	init_split_struct(t_struct *mini)
 	mini->split.qtt_pipe = 0;
 	mini->split.q = 0;
 	mini->last_redir = 0;
+	mini->redir_flag = 0;
 }
 
 char	*clean_spaces(char *in)
