@@ -198,7 +198,7 @@ char	*create_prompt(void);
 /*
 ** redir_in.c
 */
-void	redirect_in(t_struct *mini, int j, char *aux);
+int		redirect_in(t_struct *mini, int j, char *aux);
 char	**double_redir(t_struct *mini, char **file, int j);
 void	read_until(char *end);
 char	*new_comman(int i, char **str);
@@ -222,7 +222,7 @@ void	execve_error(t_struct *mini, int out);
 */
 void	exec_commands(t_struct *mini, int out);
 void	exec_assist(t_struct *mini, int flag, int out);
-void	action(t_struct *mini);
+int		action(t_struct *mini);
 void	exec_process(t_struct *mini, int in, int out, int flag, int sor);
 void	ft_execve_pipe(t_struct *mini, int i, char *command, int out);
 
