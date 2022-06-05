@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	redirect_in(t_struct *mini, int j, char *aux)
+int	redirect_in(t_struct *mini, int j, char *aux)
 {
 	char	**file;
 	char	*copy;
@@ -21,7 +21,11 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 	{
 		file = NULL;
 		if (mini->commands[j][1] == '<')
+		{
 			file = double_redir(mini, file, j);
+			if (!file)
+				return (0);
+		}
 		else
 		{
 			file = ft_split(&mini->commands[j][1], ' ');
@@ -29,6 +33,11 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 			{
 				printf("malloc error\n");
 				exit(1);
+			}
+			if  (!file[0])
+			{
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				return (0);
 			}
 			if (file[0][0] == '$')
 			{
@@ -52,6 +61,7 @@ void	redirect_in(t_struct *mini, int j, char *aux)
 		mini->last_redir = 0;
 		free_char_array(file);
 	}
+	return (1);
 }
 
 char	**double_redir(t_struct *mini, char **file, int j)
@@ -63,6 +73,11 @@ char	**double_redir(t_struct *mini, char **file, int j)
 	{
 		printf("malloc error\n");
 		exit(1);
+	}
+	if (!file[0])
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (NULL);
 	}
 	old_stdin = dup(STDIN_FILENO);
 	read_until (file[0]);
