@@ -42,7 +42,8 @@ void	exec_assist(t_struct *mini, int flag, int out)
 {
 	int	i;
 
-	action(mini);
+	if (!action(mini))
+		return ;
 	if (mini->out_fd == -1)
 	{
 		printf("minishell: Permission denied\n");
@@ -70,7 +71,7 @@ void	exec_assist(t_struct *mini, int flag, int out)
 		free(mini->name_file);
 }
 
-void	action(t_struct *mini)
+int	action(t_struct *mini)
 {
 	mini->line = ft_strdup(mini->commands[mini->c]);
 	if (mini->split.n_comand > 1 )
@@ -79,7 +80,8 @@ void	action(t_struct *mini)
 	while (mini->commands[mini->c] && mini->commands[mini->c][0] != '|')
 	{
 		redirect_out(mini, mini->c);
-		redirect_in(mini, mini->c, NULL);
+		if (!redirect_in(mini, mini->c, NULL))
+			return (0);
 		mini->c++;
 	}
 	if (mini->error_name_file != NULL)
@@ -88,6 +90,7 @@ void	action(t_struct *mini)
 		printf("minishell: %s: %s", mini->error_name_file, ERROR_DIR);
 		free(mini->error_name_file);
 	}
+	return (1);
 }
 
 void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
