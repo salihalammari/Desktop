@@ -84,6 +84,7 @@ void	copy_export(t_struct *mini, int flag)
 	{
 		free_char_array(mini->sorted.key);
 		free_char_array(mini->sorted.content);
+		free_char_array(mini->sorted.env);
 	}
 	mini->sorted.env = malloc(sizeof(char *) * (mini->env.len + 1));
 	mini->sorted.key = malloc(sizeof(char *) * (mini->env.len + 1));
