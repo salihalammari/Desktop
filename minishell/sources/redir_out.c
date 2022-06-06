@@ -26,6 +26,10 @@ void	redirect_out(t_struct *mini, int j)
 		{
 			file = ft_strtrim(&mini->commands[j][2], " ");
 			take_off_quotes(file);
+			copy = ft_split(file, ' ')[0];
+			free(file);
+			file = ft_strdup(copy);
+			free(copy);
 			if (file[0] == '$')
 			{
 				copy = ft_strdup(file);
