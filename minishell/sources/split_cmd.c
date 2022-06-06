@@ -32,15 +32,6 @@ void	split_cmd(t_struct *mini, char *in, int i)
 		mini->split.len++;
 		i++;
 	}
-	if (mini->split.q == 0)
-	{
-		j = 0;
-		while (mini->commands[j])
-		{
-			take_off_quotes(mini->commands[j]);
-			j++;
-		}
-	}
 	if (ft_strlen(in) > 0)
 	{
 		mini->commands[mini->split.n_comand]
@@ -60,6 +51,7 @@ void	init_split_struct(t_struct *mini)
 	mini->split.q = 0;
 	mini->last_redir = 0;
 	mini->redir_flag = 0;
+	mini->name_file = NULL;
 }
 
 char	*clean_spaces(char *in)
