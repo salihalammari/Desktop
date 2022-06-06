@@ -207,8 +207,8 @@ char	*new_comman(int i, char **str);
 /*
 ** redir_out.c
 */
-void	redirect_out(t_struct *mini, int j);
-void	simple_redir_out(t_struct *mini, int j, int flags);
+int		redirect_out(t_struct *mini, int j);
+int		simple_redir_out(t_struct *mini, int j, int flags);
 int		find_char(char *string, char needle);
 
 /*
