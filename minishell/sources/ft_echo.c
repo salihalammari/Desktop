@@ -14,8 +14,8 @@
 
 void	ft_echo(t_struct *mini)
 {
-	int		j;
-	int		n;
+	int	j;
+	int	n;
 
 	n = init_echo(mini, 0);
 	j = 0;
