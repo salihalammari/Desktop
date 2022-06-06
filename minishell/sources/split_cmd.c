@@ -66,45 +66,6 @@ char	*clean_spaces(char *in)
 	return (in);
 }
 
-/* void	rider_before_cmd(t_struct *mini, char *in, int i)
-{
-	char	**split;
-	char	*copy;
-	char	*aux;
-	int		n;
-
-	split = ft_split(in, ' ');
-	if (!split)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
-	n = 2;
-	if (in[1] != ' ')
-		n = 1;
-	mini->commands[mini->split.n_comand] = ft_strdup("");
-	while (ft_strncmp(split[n], "|", 1) != 0 && split[n])
-	{
-		aux = ft_strdup(split[n]);
-		copy = ft_strdup(mini->commands[mini->split.n_comand]);
-		free(mini->commands[mini->split.n_comand]);
-		mini->commands[mini->split.n_comand] = ft_strjoin(copy, " ");
-		free(copy);
-		copy = ft_strdup(mini->commands[mini->split.n_comand]);
-		free(mini->commands[mini->split.n_comand]);
-		mini->commands[mini->split.n_comand] = ft_strjoin(copy, aux);
-		free(copy);
-		free(aux);
-		n++;
-		if (!split[n])
-			break ;
-	}
-	free_char_array(split);
-	mini->split.ini = i;
-	mini->split.len = 0;
-	mini->split.n_comand++;
-} */
-
 void	rider_before_cmd(t_struct *mini, char *in, int i)
 {
 	char	**split;
