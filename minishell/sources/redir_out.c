@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	redirect_out(t_struct *mini, int j)
+int	redirect_out(t_struct *mini, int j)
 {
 	int		flags;
 	char	*file;
@@ -25,6 +25,11 @@ void	redirect_out(t_struct *mini, int j)
 		if (mini->commands[j] && mini->commands[j][1] == '>')
 		{
 			file = ft_strtrim(&mini->commands[j][2], " ");
+			if (!file[0])
+			{
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				return (0);
+			}
 			take_off_quotes(file);
 			copy = ft_split(file, ' ')[0];
 			free(file);
@@ -41,14 +46,16 @@ void	redirect_out(t_struct *mini, int j)
 			free (file);
 		}
 		else
-			simple_redir_out(mini, j, flags);
+			if (!simple_redir_out(mini, j, flags))
+				return (0);
 		mini->last_redir = 1;
 		if (mini->split.n_comand == 1)
 			free(mini->line);
 	}
+	return (1);
 }
 
-void	simple_redir_out(t_struct *mini, int j, int flags)
+int	simple_redir_out(t_struct *mini, int j, int flags)
 {
 	char	*assist;
 	char	*file;
@@ -56,6 +63,11 @@ void	simple_redir_out(t_struct *mini, int j, int flags)
 
 	assist = ft_strtrim(&mini->commands[j][1], " ");
 	file = ft_substr(assist, 0, find_char(assist, ' '));
+	if (!file[0])
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
+	}
 	take_off_quotes(file);
 	if (file[0] == '$')
 	{
@@ -68,6 +80,7 @@ void	simple_redir_out(t_struct *mini, int j, int flags)
 	mini->out_fd = open(file, flags | O_TRUNC, 0777);
 	free (assist);
 	free (file);
+	return (1);
 }
 
 int	find_char(char *string, char needle)
