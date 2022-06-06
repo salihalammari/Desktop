@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:01:15 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:01:17 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int check_quote_s1(char *str)
@@ -17,7 +29,7 @@ int check_quote_s1(char *str)
             o1++;
         i++;
     }
-    if ((d1 && o1) || (d1 % 2 != 0) || (o1 % 2 != 0))
+    if (((d1 && o1) || (d1 % 2 != 0) || (o1 % 2 != 0)) && find_char(str, '=') == (int)ft_strlen(str))
     {
         printf("minishell: %s not a valid identifier\n", str);
         return (0);
