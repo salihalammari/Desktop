@@ -71,6 +71,7 @@ void	create_env(t_struct *mini, char **my_env, int flag)
 	}
 	mini->env.key[i] = NULL;
 	mini->env.content[i] = NULL;
+	copy_export(mini, 0);
 }
 
 void	len_env(t_struct *mini)
@@ -91,5 +92,4 @@ void	init_struct_env(t_struct *mini)
 	mini->env.content = malloc(sizeof(char *) * (mini->env.len + 1));
 	if (!mini->env.content)
 		exit(EXIT_FAILURE);
-	copy_export(mini, 0);
 }
