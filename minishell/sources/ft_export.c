@@ -55,6 +55,7 @@ int	if_plus(char *key, char *value, t_struct *mini)
 void	ft_export(t_struct *mini)
 {
 	int		i;
+	int		j;
 	char	**env_aux;
 
 	print_export(mini);
@@ -74,11 +75,23 @@ void	ft_export(t_struct *mini)
 			take_off_quotes(env_aux[0]);
 			if (find_env(mini, env_aux[0]))
 			{
+				if (find_char(mini->tokens[i], '=') != (int)ft_strlen(mini->tokens[i]))
+				{
+					j = 0;
+					while (mini->env.key[j])
+					{
+						if (ft_strncmp(mini->env.key[j], env_aux[0], ft_strlen(env_aux[0])) == 0)
+						{
+							free(mini->env.content[j]);
+							mini->env.content[j] = ft_strdup("\"\"");
+							break ;
+						}
+						j++;
+					}
+				}
 				i++;
 				continue ;
 			}
-			else if (find_char(mini->tokens[i], '=') != (int)ft_strlen(mini->tokens[i]))
-				add_env(mini, env_aux[0], "\"\"");
 			else
 				add_env(mini, env_aux[0], NULL);
 			i++;
