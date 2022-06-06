@@ -36,6 +36,9 @@ void	split_cmd(t_struct *mini, char *in, int i)
 	{
 		mini->commands[mini->split.n_comand]
 			= ft_substr(in, mini->split.ini, i);
+		if (!check_quote_s1(mini->commands[mini->split.n_comand]))
+			return ;
+		take_off_quotes(mini->commands[mini->split.n_comand]);
 		mini->split.n_comand++;
 	}
 	free(in);
