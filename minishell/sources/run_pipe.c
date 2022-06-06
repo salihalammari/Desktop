@@ -67,8 +67,7 @@ void	exec_assist(t_struct *mini, int flag, int out)
 		free_char_array(mini->tokens);
 		free(mini->token.to_exec);
 	}
-	if (mini->name_file)
-		free(mini->name_file);
+	free(mini->name_file);
 }
 
 int	action(t_struct *mini)
