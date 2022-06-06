@@ -78,7 +78,8 @@ int	action(t_struct *mini)
 	mini->error_name_file = NULL;
 	while (mini->commands[mini->c] && mini->commands[mini->c][0] != '|')
 	{
-		redirect_out(mini, mini->c);
+		if (!redirect_out(mini, mini->c))
+			return (0);
 		if (!redirect_in(mini, mini->c, NULL))
 			return (0);
 		mini->c++;
