@@ -39,6 +39,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	char	*extend;
 	char	*n_env;
 	char	*end;
+	int		i;
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
 	end = ft_strdup(tk->end);
@@ -48,8 +49,25 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	free(end);
 	tk->posic = tokenizer_find_char(&mini->line[tk->i + 1], ' ');
 	n_env = ft_substr(mini->line, tk->i + 1, tk->posic);
+	
+	if (mini->line[tk->i] == '$') /*************echo $AEFAEFAEF******************************/
+	{
+		printf("%s\n", n_env);
+		if (!find_env(mini, n_env))
+		{
+			i = 0;
+			while (n_env[i])
+			{
+				n_env[i] = ' ';
+				i++;
+			}
+		}
+	}
+
 	if (mini->line[tk->i + 1] != '?' && find_env(mini, n_env))
 		extend = ft_strdup(find_env(mini, n_env));
+	else if (mini->line[tk->i] == '$' && (mini->line[tk->i + 1] == '\0' || mini->line[tk->i + 1] == ' '))
+		extend = ft_strdup("$");
 	else if (mini->line[tk->i + 1] != '?' && !find_env(mini, n_env))
 		extend = ft_strdup(n_env);
 	else if (mini->line[tk->i + 1] == '?')
