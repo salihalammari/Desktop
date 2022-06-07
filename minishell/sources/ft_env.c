@@ -22,7 +22,7 @@ void	ft_env(t_struct *mini)
 		printf("env: %s: No such file or directory\n", mini->tokens[1]);
 		return ;
 	}
-	while (i < mini->env.len)
+	while (mini->env.key[i])
 	{
 		if (mini->env.content[i][1] != '\"' && mini->env.content[i][0] != '\0')
 		{
@@ -44,6 +44,7 @@ void	create_env(t_struct *mini, char **my_env, int flag)
 {
 	int		i;
 	char	**env_aux;
+	char	*copy;
 
 	if (flag == 0)
 		mini->env.env = my_env;
@@ -71,6 +72,36 @@ void	create_env(t_struct *mini, char **my_env, int flag)
 	}
 	mini->env.key[i] = NULL;
 	mini->env.content[i] = NULL;
+	i = 0;
+	while (mini->env.key[i])
+	{
+		if (ft_strncmp(mini->env.key[i], "OLDPWD", 6) == 0)
+		{
+			while (mini->env.key[i + 1])
+			{
+				copy = ft_strdup(mini->env.key[i]);
+				free(mini->env.key[i]);
+				mini->env.key[i] = ft_strdup(mini->env.key[i + 1]);
+				free(mini->env.key[i + 1]);
+				mini->env.key[i + 1] = ft_strdup(copy);
+				free(copy);
+
+				copy = ft_strdup(mini->env.content[i]);
+				free(mini->env.content[i]);
+				mini->env.content[i] = ft_strdup(mini->env.content[i + 1]);
+				free(mini->env.content[i + 1]);
+				mini->env.content[i + 1] = ft_strdup(copy);
+				free(copy);
+				i++;
+			}
+			free(mini->env.content[i - 1]);
+			mini->env.content[i - 1] = ft_strdup("/usr/bin/env");
+			mini->env.key[i] = NULL;
+			mini->env.content[i] = NULL;
+			break ;
+		}
+		i++;
+	}
 	copy_export(mini, 0);
 }
 
