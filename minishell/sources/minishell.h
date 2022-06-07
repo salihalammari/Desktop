@@ -32,6 +32,7 @@
 # define GREEN "\001\033[1;32m\002"
 
 # define ERROR_PIPE "minishell: syntax error near unexpected token `|'\n"
+# define ERROR_REDI "minishell: syntax error near unexpected token `newline'\n"
 # define ERROR_DIR "No such file or directory\n"
 # define ERROR_HOME "minishell: cd: HOME not set\n"
 
