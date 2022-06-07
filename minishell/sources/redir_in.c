@@ -36,7 +36,7 @@ int	redirect_in(t_struct *mini, int j, char *aux)
 			}
 			if  (!file[0])
 			{
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				printf(ERROR_REDI);
 				return (0);
 			}
 			if (file[0][0] == D_QUOTE || file[0][0] == QUOTE)
@@ -79,7 +79,7 @@ char	**double_redir(t_struct *mini, char **file, int j)
 	}
 	if (!file[0])
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		printf(ERROR_REDI);
 		return (NULL);
 	}
 	if (file[0][0] == D_QUOTE || file[0][0] == QUOTE)
