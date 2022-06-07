@@ -18,6 +18,8 @@ void	split_cmd(t_struct *mini, char *in, int i)
 
 	init_split_struct(mini);
 	in = clean_spaces(in);
+	if (!check_pipe_between_quotes(in))
+		return ;
 	while (i < (int)ft_strlen(in))
 	{
 		if (mini->split.q == 0 && (in[i] == D_QUOTE || in[i] == QUOTE))
