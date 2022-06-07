@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_pwd(t_struct *mini)
+void	ft_pwd(void)
 {
 	char	path[2000];
 
