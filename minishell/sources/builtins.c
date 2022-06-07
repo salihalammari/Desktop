@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:00:50 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:00:52 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	is_builtin(char *cmd, t_struct *mini)
@@ -19,7 +31,7 @@ void	run_builtin(t_struct *mini)
 	if (!ft_strncmp(mini->tokens[0], "exit", 4))
 		ft_exit(mini);
 	if (!ft_strncmp(mini->tokens[0], "pwd", 3))
-		ft_pwd(mini);
+		ft_pwd();
 	if (!ft_strncmp(mini->tokens[0], "echo", 4))
 		ft_echo(mini);
 	if (!ft_strncmp(mini->tokens[0], "cd", 2))
