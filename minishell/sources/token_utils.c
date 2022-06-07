@@ -39,7 +39,29 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	char	*extend;
 	char	*n_env;
 	char	*end;
+	char	*copy;
 	int		i;
+	int		j;
+
+	if (find_char(mini->line, '$') != (int)ft_strlen(mini->line))
+	{
+		i = 0;
+		while (mini->line[i])
+		{
+			if (mini->line[i] == '$' && !ft_isalnum(mini->line[i - 1]))
+				mini->line[i - 1] = ' ';
+			else if (mini->line[i] == '$' && ft_isalnum(mini->line[i - 1]))
+			{
+				j = i - 1;
+				while (mini->line[j] != ' ')
+				{
+					mini->line[j] = ' ';
+					j--;
+				}
+			}
+			i++;
+		}
+	}
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
 	end = ft_strdup(tk->end);
@@ -52,7 +74,13 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	
 	if (mini->line[tk->i] == '$') /*************echo $AEFAEFAEF******************************/
 	{
-		printf("%s\n", n_env);
+		if (find_char(n_env, '$') != (int)ft_strlen(n_env))
+		{
+			copy = ft_strdup(n_env);
+			free(n_env);
+			n_env = ft_substr(copy, tk->init, find_char(n_env, '$'));
+			free(copy);
+		}
 		if (!find_env(mini, n_env))
 		{
 			i = 0;
@@ -63,6 +91,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 			}
 		}
 	}
+
 
 	if (mini->line[tk->i + 1] != '?' && find_env(mini, n_env))
 		extend = ft_strdup(find_env(mini, n_env));
