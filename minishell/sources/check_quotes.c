@@ -77,3 +77,21 @@ int check_quotes(char *str1, char *str2)
     else
         return (1);
 }
+
+int	check_pipe_between_quotes(char *in)
+{
+	char	*cmd;
+
+	if (in[0] == D_QUOTE || in[0] == QUOTE)
+	{
+		if (find_char(in, '|') != (int)ft_strlen(in))
+		{
+			cmd = ft_strdup(in);
+			take_off_quotes(cmd);
+			printf("minishell: %s: command not found\n", cmd);
+			free(cmd);
+			return (0);
+		}
+	}
+	return (1);
+}
