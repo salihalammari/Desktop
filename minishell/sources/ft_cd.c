@@ -46,6 +46,7 @@ static void	change_oldpwd(t_struct *mini)
 		}
 		i++;
 	}
+	add_env(mini, "OLDPWD", find_env(mini, "PWD"));
 }
 
 int	ft_cd(t_struct *mini)
@@ -60,6 +61,11 @@ int	ft_cd(t_struct *mini)
 	{
 		if (ft_strncmp(mini->tokens[1], "--", 2) == 0 && mini->tokens[1][2] == '\0')
 		{
+			if (home == false)
+			{
+				printf(ERROR_HOME);
+				return (1);
+			}
 			path = ft_strdup(mini->home);
 			token_aux = ft_strdup(path);
 			free(path);
@@ -71,6 +77,11 @@ int	ft_cd(t_struct *mini)
 		}
 		else if (ft_strncmp(mini->tokens[1], "-", 1) == 0 && mini->tokens[1][1] == '\0')
 		{
+			if (!find_env(mini, "OLDPWD"))
+			{
+				printf("minishell: cd: OLDPWD not set\n");
+				return (1);
+			}
 			i = 0;
 			path = ft_strdup(find_env(mini, "OLDPWD"));
 			token_aux = ft_strdup(path);
