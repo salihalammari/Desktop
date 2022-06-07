@@ -129,7 +129,7 @@ void	add_env(t_struct *mini, char *new_key, char *new_content)
 	mini->env.len++;
 	alloc_env_aux(mini);
 	i = 0;
-	while (i < mini->env.len - 1)
+	while (mini->env.key[i])
 	{
 		mini->env_aux.key[i] = ft_strdup(mini->env.key[i]);
 		mini->env_aux.content[i] = ft_strdup(mini->env.content[i]);
