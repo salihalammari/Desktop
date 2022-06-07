@@ -14,8 +14,6 @@
 
 void	split_cmd(t_struct *mini, char *in, int i)
 {
-	int	j;
-
 	init_split_struct(mini);
 	in = clean_spaces(in);
 	if (!check_pipe_between_quotes(in))
