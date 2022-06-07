@@ -27,7 +27,7 @@ int	redirect_out(t_struct *mini, int j)
 			file = ft_strtrim(&mini->commands[j][2], " ");
 			if (!file[0])
 			{
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				printf(ERROR_REDI);
 				return (0);
 			}
 			take_off_quotes(file);
@@ -65,7 +65,7 @@ int	simple_redir_out(t_struct *mini, int j, int flags)
 	file = ft_substr(assist, 0, find_char(assist, ' '));
 	if (!file[0])
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		printf(ERROR_REDI);
 		return (0);
 	}
 	take_off_quotes(file);
