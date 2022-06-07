@@ -125,7 +125,7 @@ void    print_export(t_struct *mini)
 		copy_export(mini, 1);
 		sort_2D_str(mini, mini->env.len);
 		i = 0;
-    	while (i < mini->env.len)
+    	while (mini->sorted.key[i])
     	{
 			if (!(mini->sorted.content[i][0] == '\"' && mini->sorted.content[i][1] == '\"') && mini->sorted.content[i][0] != '\0')
 				printf("declare -x %s=\"%s\"\n", mini->sorted.key[i], mini->sorted.content[i]);
@@ -141,7 +141,7 @@ void    print_export(t_struct *mini)
 void	exec_verify(t_struct *mini, char **env_aux, int i)
 {
 	if (env_aux[1])
-	verify_if_env_exists(mini, env_aux, i);
+		verify_if_env_exists(mini, env_aux, i);
 	else if (mini->tokens[i][ft_strlen(mini->tokens[1]) - 1] == '=')
 	{
 		env_aux[1] = ft_strdup("");
