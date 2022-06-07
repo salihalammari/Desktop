@@ -98,7 +98,6 @@ void	read_until(t_struct *mini, char *end)
 {
 	char	*line;
 	char	*copy;
-	int		i;
 	int		fd[2];
 
 	line = ft_strdup("");
