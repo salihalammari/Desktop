@@ -175,7 +175,7 @@ void	add_env(t_struct *mini, char *new_key, char *new_content);
 /*
 ** ft_pwd.c
 */
-void	ft_pwd(t_struct *mini);
+void	ft_pwd(void);
 char	*get_cwd_buf(void);
 
 /*
