@@ -84,7 +84,7 @@ void	rider_before_cmd(t_struct *mini, char *in, int i)
 		free_char_array(split);
 		return ;
 	}
-	else if (split[1] && (find_char(split[0], '>') != (int)ft_strlen(split[0]) || find_char(split[0], '<') != (int)ft_strlen(split[0])) && (split[0][ft_strlen(split[0] - 1)] == '>' || split[0][ft_strlen(split[0] - 1)] == '<') && !split[2])
+	else if (split[1] && (split[0][ft_strlen(split[0]) - 1] == '>' || split[0][ft_strlen(split[0]) - 1] == '<') && !split[2])
 	{
 		free_char_array(split);
 		return ;
