@@ -112,8 +112,9 @@ void	run_builtin(t_struct *mini);
 /*
 ** check_quotes.c
 */
-int check_quote_s1(char *str);
-int check_quotes(char *str1, char *str2);
+int 	check_quote_s1(char *str);
+int 	check_quotes(char *str1, char *str2);
+int		check_pipe_between_quotes(char *in);
 
 /*
 ** expander.c
