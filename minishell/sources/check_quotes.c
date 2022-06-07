@@ -81,17 +81,28 @@ int check_quotes(char *str1, char *str2)
 int	check_pipe_between_quotes(char *in)
 {
 	char	*cmd;
+    char    **split;
 
 	if (in[0] == D_QUOTE || in[0] == QUOTE)
 	{
-		if ((find_char(in, '|') != (int)ft_strlen(in)) || (find_char(in, ' ') != (int)ft_strlen(in)))
+        cmd = ft_strdup(in);
+		take_off_quotes(cmd);
+		if (find_char(in, '|') != (int)ft_strlen(in))
 		{
-			cmd = ft_strdup(in);
-			take_off_quotes(cmd);
 			printf("minishell: %s: command not found\n", cmd);
 			free(cmd);
 			return (0);
 		}
+        split = ft_split(cmd, ' ');
+        if (split[0] && split[1] && (int)ft_strlen(split[1]) > 1)
+        {
+			printf("minishell: %s: command not found\n", cmd);
+			free(cmd);
+            free_char_array(split);
+			return (0);
+        }
+        free_char_array(split);
+        free(cmd);
 	}
 	return (1);
 }
