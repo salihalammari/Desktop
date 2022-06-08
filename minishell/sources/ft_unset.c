@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/29 21:03:51 by sghajdao          #+#    #+#             */
+/*   Updated: 2022/05/29 21:03:53 by sghajdao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_unset(t_struct *mini)
@@ -30,7 +42,7 @@ void	rm_env(t_struct *mini)
 	alloc_env_aux(mini);
 	i = 0;
 	j = 0;
-	while (i < mini->env.len + 1)
+	while (mini->env.key[i])
 	{
 		if (i != mini->env.index)
 		{
