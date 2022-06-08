@@ -31,6 +31,7 @@ void	initialize(t_struct *mini, char **env)
 		free(pwd);
 		mini->env.env[3] = NULL;
 		create_env(mini, env, flag);
+		init_path(mini);
 	}
 	if (*env)
 	{
