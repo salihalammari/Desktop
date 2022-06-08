@@ -20,6 +20,7 @@ void	ft_env(t_struct *mini)
 	if (mini->tokens[1])
 	{
 		printf("env: %s: No such file or directory\n", mini->tokens[1]);
+		g_ret_number = 127;
 		return ;
 	}
 	while (mini->env.key[i])
