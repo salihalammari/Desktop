@@ -40,13 +40,13 @@ void	ft_env(t_struct *mini)
 	g_ret_number = 0;
 }
 
-void	create_env(t_struct *mini, char **my_env, int flag)
+void	create_env(t_struct *mini, char **my_env)
 {
 	int		i;
 	char	**env_aux;
 	char	*copy;
 
-	if (flag == 0)
+	if (mini->env_flag == 0)
 		mini->env.env = my_env;
 	len_env(mini);
 	init_struct_env(mini);
