@@ -80,6 +80,7 @@ typedef struct s_struct
 	int		num_tokens;
 	int		c;
 	int		redir_flag;
+	int		env_flag;
 	char	quote;
 	char	*line;
 	char	*line_read;
@@ -143,7 +144,7 @@ void	print_echo(t_struct *mini, char *mini_tokens_i);
 ** ft_env.c
 */
 void	ft_env(t_struct *mini);
-void	create_env(t_struct *mini, char **my_env, int flag);
+void	create_env(t_struct *mini, char **my_env);
 void	len_env(t_struct *mini);
 void	init_struct_env(t_struct *mini);
 
