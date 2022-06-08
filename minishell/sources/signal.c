@@ -20,7 +20,9 @@ static void	write_exit(t_struct *mini)
 	char	*c;
 
 	i = 0;
-	c = ft_itoa(ft_strlen(find_env(mini, "PWD")));
+	if (mini->env_flag == 1)
+		printf("\n");
+	c = ft_itoa((int)ft_strlen(find_env(mini, "PWD")));
 	ex = ft_strjoin("\033[1A\033[", c);
 	free(c);
 	copy = ft_strdup(ex);
