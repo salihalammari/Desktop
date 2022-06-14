@@ -32,17 +32,21 @@ int	redirect_out(t_struct *mini, int j)
 				return (0);
 			}
 			take_off_quotes(file);
-			copy = ft_split(file, ' ')[0];
+			copy = ft_substr(file, 0, find_char(file, ' '));
+			malloc_check_strdup(copy);
 			free(file);
 			file = ft_strdup(copy);
+			malloc_check_strdup(file);
 			free(copy);
 			if (file[0] == '$')
 			{
 				copy = ft_strdup(file);
+				malloc_check_strdup(copy);
 				free(file);
 				file = expander(mini, copy);
 				free(copy);
 			}
+			copy = NULL;
 			mini->out_fd = open(file, flags | O_APPEND, 0777);
 			free (file);
 		}
@@ -51,7 +55,10 @@ int	redirect_out(t_struct *mini, int j)
 				return (0);
 		mini->last_redir = 1;
 		if (mini->split.n_comand == 1)
+		{
 			free(mini->line);
+			mini->line = NULL;
+		}
 	}
 	return (1);
 }
@@ -74,6 +81,7 @@ int	simple_redir_out(t_struct *mini, int j, int flags)
 	if (file[0] == '$')
 	{
 		copy = ft_strdup(file);
+		malloc_check_strdup(copy);
 		free(file);
 		file = expander(mini, copy);
 		free(copy);

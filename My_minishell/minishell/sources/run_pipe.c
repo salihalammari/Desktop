@@ -65,15 +65,19 @@ void	exec_assist(t_struct *mini, int flag, int out)
 			is_builtin(mini->tokens[0], mini);
 		if (mini->in_fd != -1)
 			exec_process(mini, mini->in_fd, mini->out_fd, flag, out);
-		free_char_array(mini->tokens);
+		free_char_array(&mini->tokens);
 		free(mini->token.to_exec);
+		mini->token.to_exec = NULL;
 	}
 	free(mini->name_file);
 }
 
 int	action(t_struct *mini)
 {
+	free(mini->line);
+	mini->line = NULL;
 	mini->line = ft_strdup(mini->commands[mini->c]);
+	malloc_check_strdup(mini->line);
 	if (mini->split.n_comand > 1 )
 		mini->c++;
 	mini->error_name_file = NULL;
@@ -93,6 +97,7 @@ int	action(t_struct *mini)
 		else if (!access(mini->error_name_file, F_OK) && access(mini->error_name_file, R_OK) == -1)
 			printf("minishell: %s: Permission denied\n", mini->error_name_file);
 		free(mini->error_name_file);
+		mini->error_name_file = NULL;
 		return (0);
 	}
 	return (1);
@@ -103,7 +108,7 @@ void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
 	pid_t	pid;
 
 	if (mini->is_builtin && mini->tokens[0])
-		run_builtin(mini);
+	run_builtin(mini);
 	else
 	{
 		pid = fork();
@@ -121,8 +126,7 @@ void	exec_process(t_struct *mini, int in, int out, int flag, int sor)
 			exit(g_ret_number);
 		}
 		else if (pid != 0 && flag == 1)
-			waitpid(pid, &g_ret_number, WUNTRACED | WCONTINUED);
-			//waitpid(pid, &g_ret_number, WUNTRACED);
+			waitpid(pid, &g_ret_number, WUNTRACED);
 		if (WIFEXITED(g_ret_number))
 			g_ret_number = WEXITSTATUS(g_ret_number);
 		(void)flag;
@@ -233,6 +237,7 @@ void	ft_execve_pipe(t_struct *mini, int i, char *command, int out)
 		while (mini->path && mini->path[i] != NULL)
 		{	
 			command = ft_strdup(mini->path[i]);
+			malloc_check_strdup(command);
 			if (mini->tokens[0][0] == '|' && mini->tokens[1])
 			{
 				if (!mini->tokens[0][1])

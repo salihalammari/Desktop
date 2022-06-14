@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:04:42 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/12 16:53:03 by slammari         ###   ########.fr       */
+/*   Updated: 2022/05/29 21:04:44 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	g_ret_number;
 
 typedef struct s_env
 {
-	char	**env;//
+	char	**env;
 	int		len;
-	char	**key;//
-	char	**content;//
+	char	**key;
+	char	**content;
 	int		index;
 }			t_env;
 
@@ -85,18 +85,18 @@ typedef struct s_struct
 	int		prompt_len;
 	char	quote;
 	char	*line;
-	char	*line_read;//
+	char	*line_read;
 	char	*name_file;
 	char	*error_name_file;
-	char	*home;//
-	char	*commands[50];//
+	char	*home;
+	char	*commands[50];
 	char	*token_aux;
-	char	**tokens;//
-	char	**path;//
+	char	**tokens;
+	char	**path;
 	char	**new_env;
-	t_env	sorted;//
+	t_env	sorted;
 	t_env	env_aux;
-	t_env	env;//
+	t_env	env;
 	t_split	split;
 	t_token	token;
 }			t_struct;
@@ -132,16 +132,39 @@ void	echo_expander(t_struct *mini);
 char	*find_env(t_struct *mini, char *needle);
 
 /*
+** ft_cd_urils.c
+*/
+int 	cd_home__(t_struct *mini, bool home);
+int 	cd_to_oldpwd(t_struct *mini);
+int 	get_cd_path(t_struct *mini, bool home);
+
+/*
 ** ft_cd.c
 */
 int		ft_cd(t_struct *mini);
 bool	there_is_home(t_struct *mini);
+void	change_pwd(t_struct *mini);
+void	change_oldpwd(t_struct *mini);
+
+/*
+** ft_echo_utils.c
+*/
+void    join_args_after_redir(char **split, char *mini_tokens_i, int i);
+int 	check_redir_out(t_struct *mini);
+
 /*
 ** ft_echo.c
 */
 void	ft_echo(t_struct *mini);
 int		init_echo(t_struct *mini, int n);
 void	print_echo(t_struct *mini, char *mini_tokens_i);
+
+/*
+** ft_env_utils.c
+*/
+void    get_real_oldpwd(t_struct *mini, int i);
+void    take_off_oldpwd(t_struct *mini, int i);
+void    just_oldpwd_things(t_struct *mini, int i);
 
 /*
 ** ft_env.c
@@ -152,11 +175,22 @@ void	len_env(t_struct *mini);
 void	init_struct_env(t_struct *mini);
 
 /*
+** ft_exit_utils.c
+*/
+void    exit_with_arg(t_struct *mini);
+void    final_free(t_struct *mini);
+
+/*
+** ft_export_utils2.c
+*/
+void    sort_assist(t_struct *mini, int i, int j);
+
+/*
 ** ft_exit.c
 */
 void	ft_exit(t_struct *mini);
 void	free_line(char *line_read);
-void	free_char_array(char **array);
+void	free_char_array(char ***array);
 void	free_char_array2(char **array);
 
 /*
@@ -203,6 +237,12 @@ void	get_line(t_struct *mini);
 char	*create_prompt(void);
 
 /*
+** malloc_check.c
+*/
+void    malloc_check_split(char **split);
+void    malloc_check_strdup(char *str);
+
+/*
 ** redir_in.c
 */
 int		redirect_in(t_struct *mini, int j, char *aux);
@@ -244,7 +284,7 @@ void	back_slash(int sig);
 /*
 ** split_cmd.c
 */
-void	split_cmd(t_struct *mini, char *in, int i);
+void	split_cmd(t_struct *mini, int i);
 void	init_split_struct(t_struct *mini);
 char	*clean_spaces(char *in);
 int		count_pipe(t_struct *mini, char *in, int i);

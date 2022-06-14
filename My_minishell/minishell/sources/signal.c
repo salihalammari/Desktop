@@ -26,6 +26,7 @@ static void	write_exit(t_struct *mini)
 	ex = ft_strjoin("\033[1A\033[", c);
 	free(c);
 	copy = ft_strdup(ex);
+	malloc_check_strdup(copy);
 	free(ex);
 	ex = ft_strjoin(copy, "C exit\n");
 	free(copy);

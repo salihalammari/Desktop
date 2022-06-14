@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:03:22 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/05/29 21:03:23 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:14:33 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	if_plus(char *key, char *value, t_struct *mini)
 			if (ft_strncmp(mini->env.key[i], key, ft_strlen(mini->env.key[i])) == 0)
 			{
 				aux = ft_strdup(mini->env.content[i]);
+				malloc_check_strdup(aux);
 				free(mini->env.content[i]);
 				take_off_quotes(aux);
 				mini->env.content[i] = ft_strjoin(aux, value);
@@ -64,11 +65,7 @@ void	ft_export(t_struct *mini)
 	while (mini->tokens[i])
 	{
 		env_aux = ft_split(mini->tokens[i], '=');
-		if (!env_aux)
-		{
-			printf("malloc error\n");
-			exit(1);
-		}
+		malloc_check_split(env_aux);
 		if (!env_aux[1])
 		{
 			if (!check_quote_s1(env_aux[0]))
@@ -91,6 +88,7 @@ void	ft_export(t_struct *mini)
 						{
 							free(mini->env.content[j]);
 							mini->env.content[j] = ft_strdup("\"\"");
+							malloc_check_strdup(mini->env.content[j]);
 							break ;
 						}
 						j++;
@@ -108,7 +106,8 @@ void	ft_export(t_struct *mini)
 		}
 		exec_verify(mini, env_aux, i);
 		i++;
-	}
+	}	
+	free_char_array(&env_aux);
 	g_ret_number = 0;
 }
 
@@ -118,7 +117,9 @@ void	verify_if_env_exists(t_struct *mini, char **env_aux, int i)
     char    *value;
 
     key = ft_strdup(env_aux[0]);
+	malloc_check_strdup(key);
     value = ft_strdup(env_aux[1]);
+	malloc_check_strdup(value);
     if (!check_quotes(key, value))
         return ;
 	if ((find_char(key, '\'') != (int)ft_strlen(key)) || (find_char(key, '\"') != (int)ft_strlen(key)))
@@ -141,19 +142,28 @@ void	add_env(t_struct *mini, char *new_key, char *new_content)
 	while (mini->env.key[i])
 	{
 		mini->env_aux.key[i] = ft_strdup(mini->env.key[i]);
+		malloc_check_strdup(mini->env_aux.key[i]);
 		mini->env_aux.content[i] = ft_strdup(mini->env.content[i]);
+		malloc_check_strdup(mini->env_aux.content[i]);
 		i++;
 	}
 	mini->env_aux.key[i] = ft_strdup(new_key);
+	malloc_check_strdup(mini->env_aux.key[i]);
 	if (new_content)
+	{
 		mini->env_aux.content[i] = ft_strdup(new_content);
+		malloc_check_strdup(mini->env_aux.content[i]);
+	}
 	else
+	{
 		mini->env_aux.content[i] = ft_strdup("\0");
+		malloc_check_strdup(mini->env_aux.content[i]);
+	}
 	i++;
 	mini->env_aux.key[i] = NULL;
 	mini->env_aux.content[i] = NULL;
-	free_char_array(mini->env.key);
-	free_char_array(mini->env.content);
+	free_char_array(&mini->env.key);
+	free_char_array(&mini->env.content);
 	mini->env.key = mini->env_aux.key;
 	mini->env.content = mini->env_aux.content;
 }

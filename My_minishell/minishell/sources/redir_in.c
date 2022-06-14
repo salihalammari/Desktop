@@ -30,11 +30,7 @@ int	redirect_in(t_struct *mini, int j, char *aux)
 		else
 		{
 			file = ft_split(&mini->commands[j][1], ' ');
-			if (!file)
-			{
-				printf("malloc error\n");
-				exit(1);
-			}
+			malloc_check_split(file);
 			if  (!file[0])
 			{
 				printf(ERROR_REDI);
@@ -47,12 +43,16 @@ int	redirect_in(t_struct *mini, int j, char *aux)
 			if (file[0][0] == '$' && mini->redir_flag == 0)
 			{
 				copy = ft_strdup(file[0]);
+				malloc_check_strdup(copy);
 				free(file[0]);
 				file[0] = expander(mini, copy);
 				free(copy);
 			}
 			if ((access(file[0], F_OK) == -1 || access(file[0], R_OK) == -1) && mini->error_name_file == NULL)
+			{
 				mini->error_name_file = ft_strdup(file[0]);
+				malloc_check_strdup(mini->error_name_file);
+			}
 			else
 				mini->in_fd = open(file[0], O_RDONLY, 0777);
 		}
@@ -61,23 +61,20 @@ int	redirect_in(t_struct *mini, int j, char *aux)
 				&& ft_strlen(aux) == 1))
 		{
 			free(mini->line);
+			mini->line = NULL;
 			mini->line = new_comman(1, file);
 		}
 		free(aux);
 		mini->last_redir = 0;
-		free_char_array(file);
+		free_char_array(&file);
 		split = ft_split(mini->commands[j], ' ');
-		if (!split)
-		{
-			printf("minishell: malloc error\n");
-			exit(1);
-		}
+		malloc_check_split(split);
 		if (((!split[1] && split[0][0] == '<' && split[0][1] == '<') || (split[0][2] == '\0' && split[0][1] == '<' && split[1] && !split[2]) || (!mini->commands[j + 1] && !mini->error_name_file)) && j < 1)
 		{
-			free_char_array(split);
+			free_char_array(&split);
 			return (0);
 		}
-		free_char_array(split);
+		free_char_array(&split);
 	}
 	return (1);
 }
@@ -87,11 +84,7 @@ char	**double_redir(t_struct *mini, char **file, int j)
 	int old_stdin;
 
 	file = ft_split(&mini->commands[j][2], ' ');
-	if  (!file)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+	malloc_check_split(file);
 	if (!file[0])
 	{
 		printf(ERROR_REDI);
@@ -117,6 +110,7 @@ void	read_until(t_struct *mini, char *end)
 	int		fd[2];
 
 	line = ft_strdup("");
+	malloc_check_strdup(line);
 	pipe(fd);
 	while (1)
 	{
@@ -129,6 +123,7 @@ void	read_until(t_struct *mini, char *end)
 		if (line[0] == '$' && mini->redir_flag == 0)
 		{
 			copy = ft_strdup(line);
+			malloc_check_strdup(copy);
 			free(line);
 			line = find_env(mini, &copy[1]);
 			free(copy);
@@ -147,16 +142,19 @@ char	*new_comman(int i, char **str)
 	char	*copy;
 
 	aux = ft_strdup("");
+	malloc_check_strdup(aux);
 	while (str[i] != NULL)
 	{
 		if (ft_strlen(aux) > 0)
 		{
 			copy = ft_strdup(aux);
+			malloc_check_strdup(copy);
 			free(aux);
 			aux = ft_strjoin(copy, " ");
 			free(copy);
 		}
 		copy = ft_strdup(aux);
+		malloc_check_strdup(copy);
 		free(aux);
 		aux = ft_strjoin(copy, str[i]);
 		free(copy);

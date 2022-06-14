@@ -19,12 +19,15 @@ void	get_home_sign(t_struct *mini, t_token *tk)
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
 	end = ft_strdup(tk->end);
+	malloc_check_strdup(end);
 	free(tk->end);
 	tk->end = ft_strjoin(end, tk->new);
 	free(tk->new);
 	free(end);
 	extend = ft_strdup(mini->home);
+	malloc_check_strdup(extend);
 	end = ft_strdup(tk->end);
+	malloc_check_strdup(end);
 	free(tk->end);
 	tk->end = ft_strjoin(end, extend);
 	free(end);
@@ -44,6 +47,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len - 1);
 	end = ft_strdup(tk->end);
+	malloc_check_strdup(end);
 	free(tk->end);
 	tk->end = ft_strjoin(end, tk->new);
 	free (tk->new);
@@ -56,6 +60,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 		if (find_char(n_env, '$') != (int)ft_strlen(n_env))
 		{
 			copy = ft_strdup(n_env);
+			malloc_check_strdup(copy);
 			free(n_env);
 			n_env = ft_substr(copy, tk->init, find_char(n_env, '$'));
 			free(copy);
@@ -71,13 +76,21 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 		}
 	}
 
-
 	if (mini->line[tk->i + 1] != '?' && find_env(mini, n_env))
+	{
 		extend = ft_strdup(find_env(mini, n_env));
+		malloc_check_strdup(extend);
+	}
 	else if (mini->line[tk->i] == '$' && (mini->line[tk->i + 1] == '\0' || mini->line[tk->i + 1] == ' '))
+	{
 		extend = ft_strdup("$");
+		malloc_check_strdup(extend);
+	}
 	else if (mini->line[tk->i + 1] != '?' && !find_env(mini, n_env))
+	{
 		extend = ft_strdup(n_env);
+		malloc_check_strdup(extend);
+	}
 	else if (mini->line[tk->i + 1] == '?')
 		extend = ft_itoa(g_ret_number);
 	else
@@ -85,6 +98,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	if (extend)
 	{
 		end = ft_strdup(tk->end);
+		malloc_check_strdup(end);
 		free(tk->end);
 		tk->end = ft_strjoin(end, extend);
 		free(end);
@@ -144,19 +158,19 @@ void	finish_tokenizer(t_struct *mini, t_token *tk)
 
 	tk->new = ft_substr(mini->line, tk->init, tk->len);
 	end = ft_strdup(tk->end);
+	malloc_check_strdup(end);
 	free(tk->end);
 	tk->end = ft_strjoin(end, tk->new);
 	free(end);
 	tk->posic = tokenizer_find_char(tk->end, ' ');
+	free(mini->token.to_print);
+	mini->token.to_print = NULL;
 	mini->token.to_print = ft_strtrim(&(tk->end)[tk->posic], " ");
 	mini->token.to_exec = ft_substr(tk->end, tk->i + 1, tk->posic);
 	tokenizer_clean_quotes(mini, mini->token.to_print, 0, 0);
 	mini->tokens = ft_split(tk->end, ' ');
-	if (!mini->tokens)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+	malloc_check_split(mini->tokens);
 	free_tk(tk);
 	free (mini->line);
-}
+	mini->line = NULL;
+} 

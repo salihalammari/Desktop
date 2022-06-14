@@ -110,14 +110,15 @@ int	check_pipe_between_quotes(char *in)
 			return (0);
 		}
         split = ft_split(cmd, ' ');
+        malloc_check_split(split);
         if (split[0] && split[1] && (int)ft_strlen(split[1]) > 1)
         {
 			printf("minishell: %s: command not found\n", cmd);
 			free(cmd);
-            free_char_array(split);
+            free_char_array(&split);
 			return (0);
         }
-        free_char_array(split);
+        free_char_array(&split);
         free(cmd);
 	}
 	return (1);

@@ -46,38 +46,33 @@ int	init_echo(t_struct *mini, int n)
 static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 {
 	char	*aux;
-	char	*str;
 	int		i;
 	char	**split;
 
 	i = 2;
-	str = ft_strdup("");
 	split = ft_split(mini->commands[1], ' ');
-	if (!split)
-	{
-		printf("minishell: malloc error\n");
-		exit(1);
-	}
-	if (split[0][1] != '\0')
+	malloc_check_split(split);
+	if (split[0][1] != '\0' && split[0][0] != '<')
 		i = 1;
-	while (split[i])
+	else if (split[0][0] == '<')
 	{
-		aux = ft_strdup(str);
-		free(str);
-		str = ft_strjoin(aux, " ");
+		aux = ft_strdup(mini_tokens_i);
+		malloc_check_strdup(mini_tokens_i);
+		free(mini_tokens_i);
+		mini_tokens_i = ft_substr(aux, 5, find_char(aux, '>') - 5);
+		malloc_check_strdup(mini_tokens_i);
 		free(aux);
-		aux = ft_strdup(str);
-		free(str);
-		str = ft_strjoin(aux, split[i]);
-		free(aux);
-		i++;
+		free_char_array(&split);
+		split = ft_split(mini->commands[2], ' ');
+		malloc_check_split(split);
+		if (split[0][0] == '>' && split[0][1] == '\0')
+			i = 2;
+		else if (split[0][0] == '>' && split[0][1] != '\0')
+			i = 1;
+		else if (split[0][0] != '>')
+			return (mini_tokens_i);
 	}
-	free_char_array(split);
-	aux = ft_strdup(mini_tokens_i);
-	free(mini_tokens_i);
-	mini_tokens_i = ft_strjoin(aux, str);
-	free(aux);
-	free(str);
+	join_args_after_redir(split, mini_tokens_i, i);
 	return (mini_tokens_i);
 }
 
@@ -88,16 +83,11 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	char	*copy;
 
 	i = 0;
-	flag = 0;
-	while (mini->line_read[i])
-	{
-		if (mini->line_read[i] == '>' && find_char(mini_tokens_i, '>') == (int)ft_strlen(mini_tokens_i))
-			flag = 1;
-		i++;
-	}
+	flag = check_redir_out(mini);
 	if (flag == 1)
 	{
 		copy = ft_strdup(mini_tokens_i);
+		malloc_check_strdup(copy);
 		free(mini_tokens_i);
 		mini_tokens_i = echo_with_redir(mini, copy);
 	}
@@ -109,4 +99,6 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 		g_ret_number = 0;
 	}
 	free(mini_tokens_i);
+	mini_tokens_i = NULL;
+	mini->token.to_print = NULL;
 }

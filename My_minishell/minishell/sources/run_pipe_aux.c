@@ -44,14 +44,17 @@ void	spaces_in_pipe(t_struct *mini, int i, char *command)
 	free(mini->tokens[i]);
 	mini->tokens[i] = aux;
 	copy = ft_strdup(command);
+	malloc_check_strdup(copy);
 	free(command);
 	command = ft_strjoin(copy, mini->tokens[i - 1]);
 	free(copy);
 	if (mini->tokens[i - 1][0] == '|' && mini->tokens[i - 1][1])
 	{
 		copy = ft_strdup(mini->tokens[i - 1]);
+		malloc_check_strdup(copy);
 		free(mini->tokens[i - 1]);
 		mini->tokens[i - 1] = ft_strdup(&copy[1]);
+		malloc_check_strdup(mini->tokens[i - 1]);
 		free(copy);
 	}
 	g_ret_number = execve(command, &mini->tokens[i - 1], mini->env.env);
@@ -68,6 +71,7 @@ void	execve_error(t_struct *mini, int out)
 	{
 		mes = ft_strjoin("minishell: ", mini->tokens[0]);
 		copy = ft_strdup(mes);
+		malloc_check_strdup(copy);
 		free(mes);
 		mes = ft_strjoin(copy, ": command not found");
 		free(copy);
@@ -78,6 +82,7 @@ void	execve_error(t_struct *mini, int out)
 	{
 		mes = ft_strjoin("minishell: ", mini->tokens[1]);
 		copy = ft_strdup(mes);
+		malloc_check_strdup(copy);
 		free(mes);
 		mes = ft_strjoin(copy, ": command not found");
 		free(copy);

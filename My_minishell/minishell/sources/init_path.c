@@ -19,14 +19,11 @@ int	init_path(t_struct *mini)
 	char	**path;
 
 	path_aux = ft_strdup(find_env(mini, "PATH"));
+	malloc_check_strdup(path_aux);
 	if (!path_aux)
 		return (0);
 	path = ft_split(path_aux, ':');
-	if (!path)
-	{
-		printf("malloc error\n");
-		exit(1);
-	}
+	malloc_check_split(path);
 	i = 0;
 	while (path[i])
 		i++;

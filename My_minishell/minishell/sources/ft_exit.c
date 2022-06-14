@@ -29,58 +29,23 @@ int	all_is_digit(char *str)
 
 void	ft_exit(t_struct *mini)
 {
-	int	ex;
-
 	printf("exit\n");
 	if (mini->tokens[1] && !mini->tokens[2] && all_is_digit(mini->tokens[1]) == 1)
-	{
-		free_char_array2(mini->commands);
-		if (*mini->env.env)
-		{
-			free_char_array2(mini->env.content);
-			free_char_array2(mini->env.key);
-		}
-		if (mini->path)
-			free_char_array(mini->path);
-		free(mini->home);
-		close(mini->in_fd);
-		close(mini->out_fd);
-		ex = ft_atoi(mini->tokens[1]);
-		free_char_array(mini->tokens);
-		free(mini->line_read);
-		free_char_array(mini->sorted.env);
-		free_char_array(mini->sorted.key);
-		free_char_array(mini->sorted.content);
-		exit(ex);
-	}
+		exit_with_arg(mini);
 	else if (mini->tokens[1] && mini->tokens[2] && all_is_digit(mini->tokens[1]))
 	{
+		final_free(mini);
 		printf("minishell: exit: too many arguments\n");
 		g_ret_number = 1;
 		return ;
 	}
 	else if (mini->tokens[1] && !all_is_digit(mini->tokens[1]))
 	{
+		final_free(mini);
 		printf("bash: exit: %s: numeric argument required\n", mini->tokens[1]);
 		exit(255);
 	}
-	free_char_array2(mini->commands);
-	if (*mini->env.env)
-	{
-		free_char_array2(mini->env.content);
-		free_char_array2(mini->env.key);
-	}
-	if (mini->env_flag == 0)
-		free_char_array(mini->path);
-	if (there_is_home(mini) == true)
-		free(mini->home);
-	free(mini->line_read);
-	close(mini->in_fd);
-	close(mini->out_fd);
-	free_char_array(mini->tokens);
-	free_char_array(mini->sorted.env);
-	free_char_array(mini->sorted.key);
-	free_char_array(mini->sorted.content);
+	final_free(mini);
 	if (g_ret_number == 258)
 		exit(2);
 	exit(g_ret_number);
@@ -95,24 +60,29 @@ void	free_line(char *line_read)
 	}
 }
 
-void	free_char_array(char **array)
+void	free_char_array(char ***array)
 {
 	int	i;
 
+	if (!array || !(*array))
+		return ;
 	i = 0;
-	while (array[i] != NULL)
+	while ((*array)[i] != NULL)
 	{
-		free(array[i]);
-		array[i] = NULL;
+		free((*array)[i]);
+		(*array)[i] = NULL;
 		i++;
 	}
-	free(array);
+	free(*array);
+	*array = NULL;
 }
 
 void	free_char_array2(char **array)
 {
 	int	i;
 
+	if (!array)
+		return ;
 	i = 0;
 	while (array[i] != NULL)
 	{

@@ -57,9 +57,6 @@ void	clean_option(t_struct *mini, char *in, int i)
 			mini->has_flag = true;
 			i += 3;
 		}
-		//copy = ft_strdup(&in[i]);
-		//free(in);
-		//in = ft_strdup(copy);
 		in = ft_memmove(in, in + i, ft_strlen(in));
 		free(copy);
 	}
@@ -70,10 +67,6 @@ void	clean_option(t_struct *mini, char *in, int i)
 			i++;
 		if (in[i] == ' ')
 		{
-			//copy = ft_strdup(&in[i]);
-			//free(in);
-			//in = ft_strdup(copy);
-			//free(copy);
 			in = ft_memmove(in, in + i, ft_strlen(in));
 			mini->has_flag = true;
 		}
@@ -85,19 +78,30 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	char	*aux;
 
 	mini->token.quote = 0;
-	aux = ft_strtrim(in, " ");
-	mini->has_flag = false;
-	clean_option(mini, in, i);
-	while (in[i] == ' ')
-		i++;
-	while (in[i])
+	if (in[0] /* && mini->commands[mini->c] */)
 	{
-		c = fixing_for_norminette(mini, in[i], aux, c);
-		i++;
+		aux = ft_strtrim(in, " ");
+		mini->has_flag = false;
+		clean_option(mini, in, i);
+		while (in[i] == ' ')
+			i++;
+		while (in[i])
+		{
+			c = fixing_for_norminette(mini, in[i], aux, c);
+			i++;
+		}
+		aux[c] = '\0';
+		free(mini->token.to_print);
+		mini->token.to_print = NULL;
+		mini->token.to_print = ft_strdup(aux);
+		malloc_check_strdup(mini->token.to_print);
+		free(aux);
 	}
-	aux[c] = '\0';
-	free(mini->token.to_print);
-	mini->token.to_print = aux;
+	else if (!in[0])
+	{
+		free(mini->token.to_print);
+		mini->token.to_print = NULL;
+	}
 }
 
 void	tokenizer(t_struct *mini)
@@ -107,6 +111,7 @@ void	tokenizer(t_struct *mini)
 	tk = init_tk();
 	mini->token.quote = 0;
 	tk->end = ft_strdup("");
+	malloc_check_strdup(tk->end);
 	if (mini->line)
 	{
 		echo_expander(mini);

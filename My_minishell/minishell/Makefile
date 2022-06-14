@@ -12,7 +12,10 @@ SRCS	=	sources/builtins.c sources/check_quotes.c sources/find_env.c \
 	sources/main.c sources/redir_in.c sources/redir_out.c \
 	sources/run_pipe_aux.c sources/run_pipe.c sources/signal.c \
 	sources/split_cmd.c sources/token_utils.c sources/token.c \
-	sources/take_off_quotes.c sources/expander.c
+	sources/take_off_quotes.c sources/expander.c sources/malloc_check.c \
+	sources/ft_cd_utils.c sources/ft_echo_utils.c sources/ft_env_utils.c \
+	sources/ft_exit_utils.c sources/ft_export_utils2.c
+
 OBJS	=	$(SRCS:.c=.o)
 
 $(NAME): $(OBJS)

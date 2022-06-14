@@ -24,7 +24,7 @@ void	ft_unset(t_struct *mini)
 			rm_env(mini);
 			if (!ft_strncmp(mini->tokens[i], "PATH", 4))
 			{
-				free_char_array(mini->path);
+				free_char_array(&mini->path);
 				mini->path = NULL;
 			}
 		}
@@ -47,15 +47,17 @@ void	rm_env(t_struct *mini)
 		if (i != mini->env.index)
 		{
 			mini->env_aux.key[j] = ft_strdup(mini->env.key[i]);
+			malloc_check_strdup(mini->env_aux.key[j]);
 			mini->env_aux.content[j] = ft_strdup(mini->env.content[i]);
+			malloc_check_strdup(mini->env_aux.content[j]);
 			j++;
 		}
 		i++;
 	}
 	mini->env_aux.key[j] = NULL;
 	mini->env_aux.content[j] = NULL;
-	free_char_array(mini->env.key);
-	free_char_array(mini->env.content);
+	free_char_array(&mini->env.key);
+	free_char_array(&mini->env.content);
 	mini->env.key = mini->env_aux.key;
 	mini->env.content = mini->env_aux.content;
 }

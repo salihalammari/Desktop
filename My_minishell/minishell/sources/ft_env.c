@@ -44,8 +44,6 @@ void	ft_env(t_struct *mini)
 void	create_env(t_struct *mini, char **my_env)
 {
 	int		i;
-	char	**env_aux;
-	char	*copy;
 
 	if (mini->env_flag == 0)
 		mini->env.env = my_env;
@@ -54,21 +52,7 @@ void	create_env(t_struct *mini, char **my_env)
 	i = 0;
 	while (mini->env.env[i])
 	{
-		env_aux = ft_split(mini->env.env[i], '=');
-		if (!env_aux)
-		{
-			printf("malloc error\n");
-			exit(1);
-		}
-		mini->env.key[i] = ft_strdup(env_aux[0]);
-		if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6))
-			mini->env.content[i] = ft_strdup(env_aux[1]);
-		else if (env_aux[1] && ft_strncmp(env_aux[0], "OLDPWD", 6) == 0)
-			mini->env.content[i] = ft_strdup(find_env(mini, "PWD"));
-		else
-			mini->env.content[i] = ft_strdup("");
-		free_char_array(env_aux);
-		env_aux = NULL;
+		get_real_oldpwd(mini, i);
 		i++;
 	}
 	mini->env.key[i] = NULL;
@@ -78,27 +62,7 @@ void	create_env(t_struct *mini, char **my_env)
 	{
 		if (ft_strncmp(mini->env.key[i], "OLDPWD", 6) == 0)
 		{
-			while (mini->env.key[i + 1])
-			{
-				copy = ft_strdup(mini->env.key[i]);
-				free(mini->env.key[i]);
-				mini->env.key[i] = ft_strdup(mini->env.key[i + 1]);
-				free(mini->env.key[i + 1]);
-				mini->env.key[i + 1] = ft_strdup(copy);
-				free(copy);
-
-				copy = ft_strdup(mini->env.content[i]);
-				free(mini->env.content[i]);
-				mini->env.content[i] = ft_strdup(mini->env.content[i + 1]);
-				free(mini->env.content[i + 1]);
-				mini->env.content[i + 1] = ft_strdup(copy);
-				free(copy);
-				i++;
-			}
-			free(mini->env.content[i - 1]);
-			mini->env.content[i - 1] = ft_strdup("/usr/bin/env");
-			mini->env.key[i] = NULL;
-			mini->env.content[i] = NULL;
+			just_oldpwd_things(mini, i);
 			break ;
 		}
 		i++;
