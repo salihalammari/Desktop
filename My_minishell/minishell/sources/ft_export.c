@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:03:22 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/14 19:14:33 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/14 22:07:00 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	ft_export(t_struct *mini)
 		exec_verify(mini, env_aux, i);
 		i++;
 	}	
-	free_char_array(&env_aux);
+	//free_char_array(&env_aux);
 	g_ret_number = 0;
 }
 

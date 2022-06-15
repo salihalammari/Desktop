@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:06:40 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/05/29 21:06:42 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:27:11 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	get_dollar_sign(t_struct *mini, t_token *tk)
 	tk->posic = tokenizer_find_char(&mini->line[tk->i + 1], ' ');
 	n_env = ft_substr(mini->line, tk->i + 1, tk->posic);
 	
-	if (mini->line[tk->i] == '$') /*************echo $AEFAEFAEF******************************/
+	if (mini->line[tk->i] == '$')
 	{
 		if (find_char(n_env, '$') != (int)ft_strlen(n_env))
 		{

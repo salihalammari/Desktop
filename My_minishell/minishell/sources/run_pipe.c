@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_pipe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:11:40 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/03 12:11:43 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:26:25 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,9 +213,7 @@ char	*get_path(char *cmd, char **env)
 	while (path && str_ichr(path, ':') > -1)
 	{
 		dir = str_ndup(path, str_ichr(path, ':'));
-		//ft_exit(dir);
 		bin = path_join(dir, cmd);
-		//ft_exit(bin);
 		free(dir);
 		if (access(bin, F_OK) == 0)
 			return (bin);

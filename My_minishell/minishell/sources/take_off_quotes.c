@@ -50,7 +50,6 @@ static void    second_case(char *list)
             }
             i++;
         }
-        //return (list);
     }
 }
 
@@ -101,5 +100,4 @@ void    take_off_quotes(char *list)
         }
         i++;
     }
-    //return (list);
 }

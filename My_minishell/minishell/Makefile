@@ -1,9 +1,10 @@
 NAME	=	minishell
 CC		=	cc
-CFLAGS	=	-Werror -Wextra -Wall
+CFLAGS	=	-Wall -Wextra -Werror -I /goinfre/Users/${USER}/homebrew/opt/readline/include -L /goinfre/Users/${USER}/homebrew/opt/readline/lib -lreadline 
 LIBFT	=	libft/libft.a
-LDFLAGS = -L/goinfre/slammari/homebrew/opt/readline/lib
-CPPFLAGS = -I/goinfre/slammari/homebrew/opt/readline/include
+
+# LDFLAGS = -L/goinfre/slammari/homebrew/opt/readline/lib
+# CPPFLAGS = -I/goinfre/slammari/homebrew/opt/readline/include
 
 SRCS	=	sources/builtins.c sources/check_quotes.c sources/find_env.c \
 	sources/ft_cd.c sources/ft_echo.c sources/ft_env.c \
@@ -21,13 +22,13 @@ OBJS	=	$(SRCS:.c=.o)
 $(NAME): $(OBJS)
 	@echo "\033[0;32m\n\nCompiling minishell..."
 	@$(MAKE) -s bonus -C ./libft
-	@$(CC) $(CFLAGS) $(LIBFT) $(LDFLAGS) -lreadline $^ -o $(NAME)
+	@$(CC) $(CFLAGS) $(LIBFT) $^ -o $(NAME)
 	@$(MAKE) -s clean -C ./libft
 	@printf "\n\033[0;32m ───────────── Done ──────────── \033[0m\n\n"
 
 %.o: %.c minishell.h
 	@printf "\033[0;33mGenerating minishell objects... %-10.10s\r" $@
-	@$(CC) $(CFLAGS) -c $(CPPFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "\033[1;36m Compiling \033[0m $< \033[1;36m√\033[0m\n"
 
 all: $(NAME)

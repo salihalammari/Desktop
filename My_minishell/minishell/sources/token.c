@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sghajdao <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:06:56 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/05/29 21:06:58 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:27:27 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	tokenizer_clean_quotes(t_struct *mini, char *in, int i, int c)
 	char	*aux;
 
 	mini->token.quote = 0;
-	if (in[0] /* && mini->commands[mini->c] */)
+	if (in[0])
 	{
 		aux = ft_strtrim(in, " ");
 		mini->has_flag = false;

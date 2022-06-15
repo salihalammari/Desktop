@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:03:07 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/14 19:19:16 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/14 22:03:21 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	exec_verify(t_struct *mini, char **env_aux, int i)
 		malloc_check_strdup(env_aux[1]);
 		verify_if_env_exists(mini, env_aux, i);
 	}
+	
 }
 
 void	exec_export_add(t_struct *mini, char *key, char *value, int i)
