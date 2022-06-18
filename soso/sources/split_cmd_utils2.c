@@ -29,25 +29,27 @@ int	check_empty_cmd(char *in)
 
 int	check_cmd(t_struct *mini)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		j;
+	int		flag;
+	char	*cmd;
 
-	i = 0;
 	flag = 0;
-	while (mini->line_read[i + 1])
-	{
-		if ((mini->line_read[i] == D_QUOTE || mini->line_read[i] == QUOTE) \
-				&& mini->line_read[i + 1] == ' ')
-			flag = 1;
-		i++;
-	}
 	i = 0;
-	while (mini->line_read[i + 1])
+	while (mini->line_read[i])
 	{
-		if ((mini->line_read[i] == D_QUOTE || mini->line_read[i] == QUOTE) \
-				&& ft_isalnum(mini->line_read[i]) \
-				&& mini->line_read[i + 1] == ' ')
-			flag = 1;
+		if (mini->line_read[i] == QUOTE || mini->line_read[i] == D_QUOTE)
+		{
+			++i;
+			j = i;
+			while (mini->line_read[i] != D_QUOTE \
+					&& mini->line_read[i] != QUOTE)
+				i++;
+			cmd = ft_substr(mini->line_read, j, i - j);
+			if (find_char(cmd, ' ') != (int)ft_strlen(cmd))
+				flag = 1;
+			free(cmd);
+		}
 		i++;
 	}
 	return (flag);
