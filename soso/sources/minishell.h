@@ -126,6 +126,7 @@ int		check_quotes(char *str1, char *str2);
 ** check_syntax.c
 */
 int		check_pipe_between_quotes(char *in);
+int		count_char(char *str, char c);
 
 /*
 ** expander_utils.c
