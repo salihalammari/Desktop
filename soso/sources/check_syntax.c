@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	count_char(char *str, char c)
+static int	count_char(char *str, char c)
 {
 	int	i;
 	int	j;
@@ -52,8 +52,7 @@ int	check_pipe_between_quotes(char *in)
 		}
 		split = ft_split(cmd, ' ');
 		malloc_check_split(split);
-		if (split[0] && split[1] && (int)ft_strlen(split[1]) > 1 \
-				&& (count_char(in, QUOTE) % 2 || count_char(in, D_QUOTE) % 2))
+		if (split[0] && split[1] && (int)ft_strlen(split[1]) > 1)
 		{
 			error_message(&cmd);
 			free_char_array(&split);

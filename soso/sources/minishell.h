@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:04:42 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/18 15:46:20 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:58:05 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_struct
 	char	**tokens;
 	char	**path;
 	char	**new_env;
+	char	*chyata;
 	t_env	sorted;
 	t_env	env_aux;
 	t_env	env;
@@ -126,12 +127,12 @@ int		check_quotes(char *str1, char *str2);
 ** check_syntax.c
 */
 int		check_pipe_between_quotes(char *in);
-int		count_char(char *str, char c);
 
 /*
 ** expander_utils.c
 */
 void	init_expander(char **copy, char **split, int *i);
+void	equal_in_echo(t_struct *mini, char **split, int *i);
 
 /*
 ** expander.c
@@ -167,6 +168,7 @@ void	join_args_after_redir(char **split, char *mini_tokens_i, int i);
 int		check_redir_out(t_struct *mini);
 char	*echo_redir_in(t_struct *mini, char *mini_tokens_i, \
 		char ***split, int *i);
+void	echo_redir(t_struct *mini, char **mini_tokens_i);
 
 /*
 ** ft_echo.c
@@ -174,6 +176,7 @@ char	*echo_redir_in(t_struct *mini, char *mini_tokens_i, \
 void	ft_echo(t_struct *mini);
 int		init_echo(t_struct *mini, int n);
 void	print_echo(t_struct *mini, char *mini_tokens_i);
+char	*echo_with_redir(t_struct *mini, char *mini_tokens_i);
 
 /*
 ** ft_env_utils.c
@@ -195,6 +198,7 @@ void	init_struct_env(t_struct *mini);
 */
 void	exit_with_arg(t_struct *mini);
 void	final_free(t_struct *mini);
+void	sort_2d_str(t_struct *mini, int len);
 
 /*
 ** ft_export_utils2.c

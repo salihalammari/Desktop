@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:06:09 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/17 18:45:10 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:19:03 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_split_struct(t_struct *mini)
 	mini->split.permi = 0;
 	mini->line = NULL;
 	mini->token.to_print = NULL;
+	mini->chyata = NULL;
 }
 
 char	*clean_spaces(char *in)

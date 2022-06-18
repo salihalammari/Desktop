@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 18:51:33 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/17 20:24:34 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:58:30 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*expander(t_struct *mini, char *file)
 	return (file);
 }
 
-static void	define_value(char **split)
+static void	define_value(t_struct *mini, char **split)
 {
 	char	*copy;
 	int		i;
@@ -45,6 +45,7 @@ static void	define_value(char **split)
 	i = 1;
 	while (split[i])
 	{
+		equal_in_echo(mini, split, &i);
 		init_expander(&copy, split, &i);
 		if (split[i][ft_strlen(split[i]) - 1] != ' ')
 		{
@@ -96,7 +97,7 @@ void	echo_expander(t_struct *mini)
 	{
 		split = ft_split(mini->line, '$');
 		malloc_check_split(split);
-		define_value(split);
+		define_value(mini, split);
 		i = 0;
 		free(mini->line);
 		mini->line = NULL;

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: slammari <slammari@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/18 13:50:40 by slammari          #+#    #+#              #
+#    Updated: 2022/06/18 15:57:23 by slammari         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Werror -Wextra -Wall
@@ -19,8 +31,8 @@ SRCS	=	sources/builtins.c sources/check_quotes.c sources/find_env.c \
 	sources/run_pipe_utils.c sources/run_pipe_utils2.c \
 	sources/token_utils2.c sources/token_utils3.c \
 	sources/split_cmd_utils.c sources/split_cmd_utils2.c \
-	sources/prompt.c sources/check_syntax.c sources/expander_utils.c
-	sources/utils_fun.c
+	sources/prompt.c sources/check_syntax.c sources/expander_utils.c\
+	sources/utils_fun.c sources/ft_export_utils4.c
 
 OBJS	=	$(SRCS:.c=.o)
 
@@ -37,6 +49,17 @@ $(NAME): $(OBJS)
 	@printf "\033[1;36m Compiling \033[0m $< \033[1;36m√\033[0m\n"
 
 all: $(NAME)
+
+clean:
+	@$(MAKE) -s clean -C ./libft
+	@rm -rf $(OBJS)
+
+fclean: clean
+	@$(MAKE) -s fclean -C ./libft
+	@rm -rf $(NAME)
+
+re: fclean all
+
 
 clean:
 	@$(MAKE) -s clean -C ./libft

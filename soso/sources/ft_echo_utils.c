@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:43:33 by slammari          #+#    #+#             */
-/*   Updated: 2022/06/18 15:43:34 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:48:43 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,14 @@ char	*echo_redir_in(t_struct *mini, char *mini_tokens_i \
 	else if (*split[0][0] != '>')
 		return (mini_tokens_i);
 	return (NULL);
+}
+
+void	echo_redir(t_struct *mini, char **mini_tokens_i)
+{
+	char	*copy;
+
+	copy = ft_strdup(*mini_tokens_i);
+	malloc_check_strdup(copy);
+	free(*mini_tokens_i);
+	*mini_tokens_i = echo_with_redir(mini, copy);
 }

@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:42:40 by slammari          #+#    #+#             */
-/*   Updated: 2022/06/18 15:42:41 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 17:24:14 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,31 @@ int	check_empty_cmd(char *in)
 
 int	check_cmd(t_struct *mini)
 {
-	int		i;
-	int		j;
-	int		flag;
-	char	*cmd;
+	int	i;
+	int	j;
+	int	flag;
 
-	flag = 0;
 	i = 0;
-	while (mini->line_read[i])
+	flag = 0;
+	while (mini->line_read[i + 1])
 	{
-		if (mini->line_read[i] == QUOTE || mini->line_read[i] == D_QUOTE)
+		if ((mini->line_read[i] == D_QUOTE || mini->line_read[i] == QUOTE) \
+				&& mini->line_read[i + 1] == ' ')
+			flag = 1;
+		i++;
+	}
+	i = 0;
+	while (mini->line_read[i + 1])
+	{
+		if (mini->line_read[i] == D_QUOTE || mini->line_read[i] == QUOTE)
 		{
-			++i;
-			j = i;
-			while (mini->line_read[i] != D_QUOTE \
-					&& mini->line_read[i] != QUOTE)
-				i++;
-			cmd = ft_substr(mini->line_read, j, i - j);
-			if (find_char(cmd, ' ') != (int)ft_strlen(cmd))
+			j = 0;
+			while (ft_isalnum(mini->line_read[j + 1]))
+				j++;
+			while (mini->line_read[j + 1] == ' ')
+				j++;
+			if (mini->line_read[j] == D_QUOTE || mini->line_read[j] == QUOTE)
 				flag = 1;
-			free(cmd);
 		}
 		i++;
 	}

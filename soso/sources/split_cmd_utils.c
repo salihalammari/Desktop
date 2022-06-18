@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:42:43 by slammari          #+#    #+#             */
-/*   Updated: 2022/06/18 15:47:00 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:18:48 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	cmd_quotes(t_struct *mini, int *i)
 					ft_substr(mini->line_read, mini->split.ini, *i);
 		if (!check_quote_s1(mini->commands[mini->split.n_comand]))
 			return (0);
-		take_off_quotes(mini->commands[mini->split.n_comand]);
+		if (ft_strncmp(mini->commands[mini->split.n_comand], "echo", 4))
+			take_off_quotes(mini->commands[mini->split.n_comand]);
 		mini->split.n_comand++;
 	}
 	return (1);

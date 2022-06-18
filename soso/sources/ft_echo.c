@@ -6,7 +6,7 @@
 /*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:02:07 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/17 18:04:52 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/18 19:50:17 by slammari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_echo(t_struct *mini)
 
 	n = init_echo(mini, 0);
 	j = 0;
-	if (mini->split.q == 0)
+	if (mini->split.q == 0 || mini->chyata)
 	{
 		if (mini->tokens[1] || mini->commands[1])
 		{
@@ -47,7 +47,7 @@ int	init_echo(t_struct *mini, int n)
 	return (n);
 }
 
-static char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
+char	*echo_with_redir(t_struct *mini, char *mini_tokens_i)
 {
 	char	*aux;
 	int		i;
@@ -72,22 +72,18 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 {
 	int		i;
 	int		flag;
-	char	*copy;
 
 	i = 0;
 	flag = check_redir_out(mini);
 	if (flag == 1)
-	{
-		copy = ft_strdup(mini_tokens_i);
-		malloc_check_strdup(copy);
-		free(mini_tokens_i);
-		mini_tokens_i = echo_with_redir(mini, copy);
-	}
+		echo_redir(mini, &mini_tokens_i);
 	if (!ft_strncmp(mini_tokens_i, "$?", 2))
 		ft_putnbr_fd(g_ret_number, mini->out_fd);
 	else
 	{
 		ft_putstr_fd(mini_tokens_i, mini->out_fd);
+		if (mini->chyata)
+			ft_putstr_fd(mini->chyata, mini->out_fd);
 		g_ret_number = 0;
 	}
 	free(mini_tokens_i);
