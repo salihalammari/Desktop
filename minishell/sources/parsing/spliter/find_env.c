@@ -34,3 +34,4 @@ char	*find_env(t_struct *mini, char *needle)
 	}
 	return (0);
 }
+
