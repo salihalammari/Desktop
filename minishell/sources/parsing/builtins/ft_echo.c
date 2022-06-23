@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:02:07 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:41:14 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:23:42 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_echo(t_struct *mini)
 	int	n;
 
 	n = init_echo(mini, 0);
-	if (mini->split.q == 0 || mini->chyata)
+	if (mini->split.q == 0 || mini->remains)
 	{
 		if (mini->tokens[1] || mini->commands[1])
 		{
@@ -29,12 +29,12 @@ void	ft_echo(t_struct *mini)
 			if (!mini->has_flag)
 				ft_putstr_fd("\n", mini->out_fd);
 		}
-		else if (mini->chyata)
-			printf("%s\n", mini->chyata);
+		else if (mini->remains)
+			printf("%s\n", mini->remains);
 		else
 			ft_putstr_fd("\n", mini->out_fd);
-		free(mini->chyata);
-		mini->chyata = NULL;
+		free(mini->remains);
+		mini->remains = NULL;
 	}
 	else
 		printf("minishell: quotes error\n");
@@ -84,8 +84,8 @@ void	print_echo(t_struct *mini, char *mini_tokens_i)
 	else
 	{
 		ft_putstr_fd(mini_tokens_i, mini->out_fd);
-		if (mini->chyata)
-			ft_putstr_fd(mini->chyata, mini->out_fd);
+		if (mini->remains)
+			ft_putstr_fd(mini->remains, mini->out_fd);
 		g_ret_number = 0;
 	}
 	free(mini_tokens_i);

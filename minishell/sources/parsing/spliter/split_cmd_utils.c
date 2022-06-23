@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:47:34 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:42:27 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:35:22 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,24 @@ void	lock_unlock(t_struct *mini, int *i)
 
 int	cmd_quotes(t_struct *mini, int *i)
 {
+	char	*copy;
+
 	if (ft_strlen(mini->line_read) > 0)
 	{
 		mini->commands[mini->split.n_comand] = \
 					ft_substr(mini->line_read, mini->split.ini, *i);
 		if (!check_quote_s1(mini->commands[mini->split.n_comand]))
 			return (0);
-		take_off_quotes(mini->commands[mini->split.n_comand]);
+		if (ft_strncmp(mini->commands[mini->split.n_comand], "export ", 7))
+			take_off_quotes(mini->commands[mini->split.n_comand]);
+		if (mini->commands[mini->split.n_comand][0] == '$')
+		{
+			copy = ft_strdup(mini->commands[mini->split.n_comand]);
+			free(mini->commands[mini->split.n_comand]);
+			mini->commands[mini->split.n_comand] = expander(mini, copy);
+			if (find_env(mini, &mini->commands[mini->split.n_comand][1]))
+				free(copy);
+		}
 		mini->split.n_comand++;
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:47:45 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:43:26 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:20:21 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	finish_tokenizer(t_struct *mini, t_token *tk)
 	tokenizer_clean_quotes(mini, mini->token.to_print, 0, 0);
 	mini->tokens = ft_split(tk->end, ' ');
 	malloc_check_split(mini->tokens);
+	traiter_export(mini);
 	free_tk(tk);
 	free (mini->line);
 	mini->line = NULL;

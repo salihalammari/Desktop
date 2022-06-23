@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:06:09 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:42:34 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:34:37 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	split_cmd(t_struct *mini, int i)
 	char	*copy;
 
 	init_split_struct(mini);
-	if (check_cmd(mini))
+	if (check_cmd(mini) && ft_strncmp(mini->line_read, "export ", 7) \
+		&& ft_strncmp(mini->line_read, "echo ", 5))
 	{
 		printf("minishelle: %s: command not found\n", mini->line_read);
 		g_ret_number = 1;
@@ -53,6 +54,7 @@ void	init_split_struct(t_struct *mini)
 	mini->line = NULL;
 	mini->token.to_print = NULL;
 	mini->heredoc = 0;
+	mini->remains = NULL;
 }
 
 char	*clean_spaces(char *in)

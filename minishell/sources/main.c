@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:04:27 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/17 16:49:12 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:25:58 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	initialize(t_struct *mini, char **env)
 	*mini->commands = NULL;
 	mini->token.to_print = NULL;
 	mini->error_name_file = NULL;
+	mini->remains = NULL;
 }
 
 static void	fd_init(t_struct *mini)

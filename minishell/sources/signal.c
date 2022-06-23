@@ -6,7 +6,7 @@
 /*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:05:55 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 11:47:32 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:08:26 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	run_signals(t_struct *mini, int sig)
 
 void	restore_prompt(int sig)
 {
-	g_ret_number = 130;
+	g_ret_number = 1;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -65,7 +65,7 @@ void	restore_prompt(int sig)
 
 void	ctrl_c(int sig)
 {
-	g_ret_number = 130;
+	g_ret_number = 1;
 	(void)sig;
 	write(1, "\n", 1);
 	rl_on_new_line();

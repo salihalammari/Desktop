@@ -2,8 +2,8 @@ NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Werror -Wextra -Wall
 LIBFT	=	libft/libft.a
-LDFLAGS = -L/goinfre/slammari/homebrew/opt/readline/lib
-CPPFLAGS = -I/goinfre/slammari/homebrew/opt/readline/include
+LDFLAGS="-L/goinfre/sghajdao/.brew/opt/readline/lib"
+CPPFLAGS="-I/goinfre/sghajdao/.brew/opt/readline/include"
 
 SRCS	=	sources/parsing/builtins/builtins.c sources/parsing/syntax/check_quotes.c sources/parsing/spliter/find_env.c \
 	sources/parsing/builtins/ft_cd.c sources/parsing/builtins/ft_echo.c sources/parsing/builtins/ft_env.c \

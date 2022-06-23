@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:46:10 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:42:20 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:47:08 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ char	*find_env(t_struct *mini, char *needle)
 		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
-

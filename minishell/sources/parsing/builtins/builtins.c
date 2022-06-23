@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:00:50 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:40:52 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:31:18 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	is_builtin(char *cmd, t_struct *mini)
 	if ((!ft_strncmp("echo", cmd, 4) && ft_strlen(cmd) == 4)
 		|| (!ft_strncmp("cd", cmd, 2) && ft_strlen(cmd) == 2)
 		|| (!ft_strncmp("pwd", cmd, 3) && ft_strlen(cmd) == 3)
-		|| (!ft_strncmp("export", cmd, 6) && ft_strlen(cmd) == 6)
+		|| (!ft_strncmp("export", cmd, 6) /* && ft_strlen(cmd) == 6 */)
 		|| (!ft_strncmp("unset", cmd, 5) && ft_strlen(cmd) == 5)
 		|| (!ft_strncmp("env", cmd, 3) && ft_strlen(cmd) == 3)
 		|| (!ft_strncmp("exit", cmd, 4) && ft_strlen(cmd) == 4)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:04:56 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:44:03 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/20 09:50:15 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exec_rediraction(t_struct *mini, char ***file, int j)
 		if (!*file)
 			return (0);
 	}
-	else
+	else if (mini->commands[j][0] == '<' && mini->heredoc == 0)
 	{
 		if (!simple_redir_in(mini, file, j))
 			return (0);

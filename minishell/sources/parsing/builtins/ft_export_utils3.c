@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:45:15 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:41:50 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:12:50 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	control_export(t_struct *mini, char **env_aux, int i)
 			{
 				if (!equal_not_found(mini, env_aux, i))
 					break ;
+				free_char_array(&env_aux);
+				i++;
 				continue ;
 			}
 			just_key_equal(mini, env_aux, i);

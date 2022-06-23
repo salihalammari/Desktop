@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:04:42 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 16:04:40 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:21:59 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_struct
 	char	**tokens;
 	char	**path;
 	char	**new_env;
-	char	*chyata;
+	char	*remains;
 	t_env	sorted;
 	t_env	env_aux;
 	t_env	env;
@@ -409,5 +409,6 @@ void	get_key(t_token *tk, t_struct *mini, char **n_env);
 */
 int		if_no_cmd(t_struct *mini, char **split, int j);
 void	fill_extend(char **extend, char *value);
+void	traiter_export(t_struct *mini);
 
 #endif

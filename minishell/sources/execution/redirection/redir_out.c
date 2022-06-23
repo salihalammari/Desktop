@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:05:10 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:44:06 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 09:16:23 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	get_output_file(t_struct *mini, char *file, int flags)
 		free(copy);
 	}
 	copy = NULL;
-	mini->out_fd = open(file, flags | O_APPEND, 0777);
+	mini->out_fd = open(file, flags | O_APPEND, 0644);
 	free (file);
 }
 
@@ -100,7 +100,7 @@ int	simple_redir_out(t_struct *mini, int j, int flags)
 			return (0);
 		}
 	}
-	mini->out_fd = open(file, flags | O_TRUNC, 0777);
+	mini->out_fd = open(file, flags | O_TRUNC, 0644);
 	free(assist);
 	free(file);
 	return (1);

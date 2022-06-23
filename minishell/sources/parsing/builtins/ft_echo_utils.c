@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:43:33 by slammari          #+#    #+#             */
-/*   Updated: 2022/06/19 17:41:12 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:41:38 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,20 @@ int	check_redir_out(t_struct *mini)
 	int	j;
 
 	i = 0;
-	while (mini->commands[i])
+	if (mini->commands[1])
 	{
-		j = 0;
-		while (mini->commands[i][j])
+		while (mini->commands[i])
 		{
-			if (mini->commands[i][j] == '>' \
-					|| mini->commands[i][j] == '<')
-				return (1);
-			j++;
+			j = 0;
+			while (mini->commands[i][j])
+			{
+				if ((mini->commands[i][j] == '>' \
+						|| mini->commands[i][j] == '<'))
+					return (1);
+				j++;
+			}
+			i++;
 		}
-		i++;
 	}
 	return (0);
 }

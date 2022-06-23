@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slammari <slammari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:34:36 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/19 17:44:00 by slammari         ###   ########.fr       */
+/*   Updated: 2022/06/20 09:33:46 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ void	read_until(t_struct *mini, char *end)
 	char	*line;
 	int		fd[2];
 
-	line = ft_strdup("");
-	malloc_check_strdup(line);
+	line = NULL;
 	pipe(fd);
 	while (1)
 	{
@@ -99,6 +98,9 @@ void	read_until(t_struct *mini, char *end)
 		if (line[0] == '$' && mini->redir_flag == 0)
 			redir_expander(mini, &line);
 		ft_putendl_fd(line, fd[1]);
+		if (ft_strlen(line))
+			free(line);
+		line = NULL;
 	}
 	dup2(fd[0], 0);
 	close(fd[1]);
