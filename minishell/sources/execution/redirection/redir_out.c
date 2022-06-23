@@ -6,7 +6,7 @@
 /*   By: sghajdao <sghajdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 21:05:10 by sghajdao          #+#    #+#             */
-/*   Updated: 2022/06/23 09:16:23 by sghajdao         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:46:59 by sghajdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static void	get_output_file(t_struct *mini, char *file, int flags)
 		free(copy);
 	}
 	copy = NULL;
-	mini->out_fd = open(file, flags | O_APPEND, 0644);
+	mini->out_fd = open(file, O_APPEND | flags, 0644);
 	free (file);
 }
 
 static int	double_redir_out(t_struct *mini, char *file, int flags, int j)
 {
-	file = ft_strtrim(&mini->commands[j][2], " ");
+	file = ft_strtrim(&mini->commands[j + 1][1], " ");
 	if (!file[0])
 	{
 		printf(ERROR_REDI);
@@ -46,6 +46,7 @@ static int	double_redir_out(t_struct *mini, char *file, int flags, int j)
 		return (0);
 	}
 	get_output_file(mini, file, flags);
+	mini->c++;
 	return (1);
 }
 
