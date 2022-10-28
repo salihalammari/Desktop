@@ -18,7 +18,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	rear;
 	char	*str;
 
-	str = NULL;
+	str = 0;
 	if (s1 != 0 && set != 0)
 	{
 		front = 0;
